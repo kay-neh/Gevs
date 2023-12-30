@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="theme_mode">
+        <item>Dark</item>
+        <item>Light</item>
+    </string-array>
+
+    <array name="constituency">
+        <item>Shangri-la-Town</item>
+        <item>Northern-Kunlun-Mountain</item>
+        <item>Western-Shangri-la</item>
+        <item>Naboo-Vallery</item>
+        <item>New-Felucia</item>
+    </array>
+
+    <string-array name="party">
+        <item>Blue Party</item>
+        <item>Red Party</item>
+        <item>Yellow Party</item>
+        <item>Independent</item>
+    </string-array>
+
+</resources>
