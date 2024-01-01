@@ -1,7 +1,23 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Gevs" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.Gevs" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!--        Typography-->
+        <item name="textAppearanceHeadline1">@style/TextAppearance.Gevs.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.Gevs.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.Gevs.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.Gevs.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.Gevs.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.Gevs.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.Gevs.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.Gevs.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.Gevs.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.Gevs.Body2</item>
+        <item name="textAppearanceButton">@style/TextAppearance.Gevs.Button</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Gevs.Caption</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.Gevs.Overline</item>
     </style>
+
+
 </resources>

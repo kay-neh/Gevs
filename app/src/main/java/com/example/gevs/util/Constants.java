@@ -9,4 +9,10 @@ public class Constants {
     public static final String ROLE_VOTER = "Voter";
     public static final String ROLE_ADMIN = "Admin";
 
+    public static final String PARTY_BLUE = "Blue Party";
+    public static final String PARTY_RED = "Red Party";
+    public static final String PARTY_YELLOW = "Yellow Party";
+    public static final String PARTY_INDEPENDENT = "Independent Party";
+
+
 }
