@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <!-- APP COLOR -->
+    <color name="colorPrimary">#0C4FEC</color>
+    <color name="colorSecondary">#0C4FEC</color>
+
+    <!--    <color name="colorSurface">#F5F5F5</color>-->
+    <!--    <color name="colorOnSurface">@color/colorPrimary</color>-->
+    <!--    <color name="colorBackground">#F5F5F5</color>-->
+
+    <color name="textColor">@color/black</color>
+    <!--    <color name="textColor2">@color/white</color>-->
+    <!--    <color name="textButtonColor">@color/colorPrimary</color>-->
+    <!--    <color name="iconColor2">#383838</color>-->
+    <!--    <color name="toolbarColor">@color/colorPrimary</color>-->
+
+    <!--    <color name="iconColor">#000000</color>-->
+    <!--    <color name="snackBarColor">#383838</color>-->
+    <!--    <color name="dividerColor">#B4BAC0</color>-->
+    <!--    <color name="cardDetailsColor">#4A7BA7</color>-->
+    <!--    <color name="cardDetailsTextColor">@color/colorOnSurface</color>-->
+
+    <color name="cardViewBackgroundColor">@color/white</color>
+    <color name="constrainBackgroundColor">#dedede</color>
+    <color name="verify">#00E676</color>
+    <color name="unverify">#FF6E40</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="grey">#424242</color>
+    <color name="orange">#FF5722</color>
+
 </resources>
