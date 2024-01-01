@@ -16,6 +16,7 @@
             android:id="@+id/admin_homepage_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:menu="@menu/menu_toolbar"
             app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

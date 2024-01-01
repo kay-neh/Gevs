@@ -19,9 +19,9 @@
         android:title="Candidates" />
 
     <item
-        android:id="@+id/adminSettingsFragment"
+        android:id="@+id/adminResultFragment"
         android:enabled="true"
-        android:icon="@drawable/bottom_nav_settings"
-        android:title="Settings" />
+        android:icon="@drawable/bottom_nav_result"
+        android:title="Result" />
 
 </menu>
