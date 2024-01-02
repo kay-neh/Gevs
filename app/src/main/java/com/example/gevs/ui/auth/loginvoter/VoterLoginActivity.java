@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.example.gevs.R;
 import com.example.gevs.databinding.ActivityVoterLoginBinding;
+import com.example.gevs.ui.auth.forgotpassword.ForgotPasswordActivity;
 import com.example.gevs.ui.auth.loginadmin.AdminLoginActivity;
 
 public class VoterLoginActivity extends AppCompatActivity {
@@ -27,6 +28,15 @@ public class VoterLoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        binding.loginUserForgotPasswordTextview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(VoterLoginActivity.this, ForgotPasswordActivity.class));
+                finish();
+            }
+        });
+
     }
 
 
