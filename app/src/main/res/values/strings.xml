@@ -9,4 +9,6 @@
     <string name="vote">Vote</string>
     <string name="results">Results</string>
     <string name="settings">Settings</string>
+    <string name="welcome_to_the_gevs_voting_platform">Welcome to the GEVS voting platform</string>
+    <string name="candidates">Candidates</string>
 </resources>
