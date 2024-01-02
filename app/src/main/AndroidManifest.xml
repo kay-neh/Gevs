@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Gevs"
         tools:targetApi="31">
         <activity
+            android:name=".ui.auth.forgotpassword.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.user.voter.VoterMainActivity"
             android:exported="false" />
         <activity

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/admin_voter_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Yami Sukehiro"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/admin_voter_constituency"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/admin_voter_constituency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp"
+        android:text="Northern-Kunlun-Mountain"
+        android:textAppearance="?attr/textAppearanceBody2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/admin_voter_name"
+        app:layout_constraintTop_toBottomOf="@+id/admin_voter_name" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Voted"
+        android:textAppearance="?attr/textAppearanceSubtitle2"
+        app:layout_constraintBottom_toBottomOf="@+id/admin_voter_name"
+        app:layout_constraintEnd_toStartOf="@+id/admin_party_imageCardView"
+        app:layout_constraintTop_toTopOf="@+id/admin_voter_name" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/admin_party_imageCardView"
+        android:layout_width="20dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        app:boxBackgroundColor="?attr/colorSurface"
+        app:cardCornerRadius="64dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView8">
+
+        <ImageView
+            android:id="@+id/admin_voter_party_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:srcCompat="@drawable/red" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/admin_voter_vote_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="9:15 am"
+        android:textAppearance="?attr/textAppearanceCaption"
+        app:layout_constraintBottom_toBottomOf="@+id/admin_voter_constituency"
+        app:layout_constraintEnd_toEndOf="@+id/admin_party_imageCardView"
+        app:layout_constraintTop_toTopOf="@+id/admin_voter_constituency" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
