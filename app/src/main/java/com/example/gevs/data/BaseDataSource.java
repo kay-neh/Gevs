@@ -10,7 +10,7 @@ import java.util.List;
 public interface BaseDataSource {
     void saveVoter(String voterId, Voter voter);
 
-    LiveData<Boolean> isEmailUsed(String email);
+    LiveData<Boolean> isExistingEmail(String email);
 
     LiveData<Boolean> isUvcValid(String uvc);
 

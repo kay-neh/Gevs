@@ -1,5 +1,7 @@
 package com.example.gevs.data.remote;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -8,6 +10,8 @@ import com.example.gevs.data.BaseDataSource;
 import com.example.gevs.data.pojo.Candidate;
 import com.example.gevs.data.pojo.Voter;
 import com.example.gevs.util.Constants;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,13 +50,13 @@ public class GevsRemoteDataSource implements BaseDataSource {
     }
 
     @Override
-    public LiveData<Boolean> isEmailUsed(String email) {
+    public LiveData<Boolean> isExistingEmail(String email) {
         DatabaseReference usersRef = firebaseDatabase.getReference(Constants.KEY_VOTERS);
         final MutableLiveData<Boolean> data = new MutableLiveData<>();
-        usersRef.orderByChild("email").equalTo(email).addValueEventListener(new ValueEventListener() {
+        usersRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
                     data.setValue(true);
                 } else {
                     data.setValue(false);
@@ -60,7 +64,7 @@ public class GevsRemoteDataSource implements BaseDataSource {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
@@ -71,7 +75,7 @@ public class GevsRemoteDataSource implements BaseDataSource {
     public LiveData<Boolean> isUvcValid(String uvc) {
         DatabaseReference universityRef = firebaseDatabase.getReference(Constants.KEY_UVC);
         final MutableLiveData<Boolean> data = new MutableLiveData<>();
-        universityRef.orderByChild(uvc).equalTo(true).addValueEventListener(new ValueEventListener() {
+        universityRef.orderByKey().equalTo(uvc).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -95,7 +99,7 @@ public class GevsRemoteDataSource implements BaseDataSource {
     public LiveData<Boolean> isUvcUsed(String uvc) {
         DatabaseReference usersRef = firebaseDatabase.getReference(Constants.KEY_VOTERS);
         final MutableLiveData<Boolean> data = new MutableLiveData<>();
-        usersRef.orderByChild("uvc").equalTo(uvc).addValueEventListener(new ValueEventListener() {
+        usersRef.orderByChild("uvc").equalTo(uvc).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -119,7 +123,7 @@ public class GevsRemoteDataSource implements BaseDataSource {
     public LiveData<Boolean> isAdmin(String email) {
         DatabaseReference usersRef = firebaseDatabase.getReference(Constants.KEY_VOTERS);
         final MutableLiveData<Boolean> data = new MutableLiveData<>();
-        usersRef.orderByChild("email").equalTo(email).addValueEventListener(new ValueEventListener() {
+        usersRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {

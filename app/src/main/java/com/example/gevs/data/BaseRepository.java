@@ -20,8 +20,8 @@ public class BaseRepository {
         remoteDataSource.saveVoter(voterId, voter);
     }
 
-    public LiveData<Boolean> isEmailUsed(String email) {
-        return remoteDataSource.isEmailUsed(email);
+    public LiveData<Boolean> isExistingEmail(String email) {
+        return remoteDataSource.isExistingEmail(email);
     }
 
     public LiveData<Boolean> isUvcValid(String uvc) {
