@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.gevs.data.BaseDataSource;
 import com.example.gevs.data.pojo.Candidate;
+import com.example.gevs.data.pojo.DistrictVote;
 import com.example.gevs.data.pojo.Voter;
 import com.example.gevs.util.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GevsRemoteDataSource implements BaseDataSource {
@@ -214,6 +216,11 @@ public class GevsRemoteDataSource implements BaseDataSource {
             }
         });
         return data;
+    }
+
+    @Override
+    public void createElectionData(HashMap<String, DistrictVote> districtVoteHashMap) {
+        firebaseDatabase.getReference(Constants.KEY_CONSTITUENCY).setValue(districtVoteHashMap);
     }
 
 }

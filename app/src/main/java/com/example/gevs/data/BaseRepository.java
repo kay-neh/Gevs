@@ -3,9 +3,11 @@ package com.example.gevs.data;
 import androidx.lifecycle.LiveData;
 
 import com.example.gevs.data.pojo.Candidate;
+import com.example.gevs.data.pojo.DistrictVote;
 import com.example.gevs.data.pojo.Voter;
 import com.example.gevs.data.remote.GevsRemoteDataSource;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class BaseRepository {
@@ -48,5 +50,8 @@ public class BaseRepository {
         return remoteDataSource.getAllVoters();
     }
 
+    public void createElectionData(HashMap<String, DistrictVote> districtVoteHashMap) {
+        remoteDataSource.createElectionData(districtVoteHashMap);
+    }
 
 }

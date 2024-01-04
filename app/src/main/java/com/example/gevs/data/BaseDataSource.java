@@ -3,8 +3,10 @@ package com.example.gevs.data;
 import androidx.lifecycle.LiveData;
 
 import com.example.gevs.data.pojo.Candidate;
+import com.example.gevs.data.pojo.DistrictVote;
 import com.example.gevs.data.pojo.Voter;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface BaseDataSource {
@@ -23,4 +25,6 @@ public interface BaseDataSource {
     LiveData<List<Candidate>> getAllCandidates();
 
     LiveData<List<Voter>> getAllVoters();
+
+    void createElectionData(HashMap<String, DistrictVote> districtVoteHashMap);
 }
