@@ -5,20 +5,27 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.gevs.R;
+import com.example.gevs.data.BaseRepository;
+import com.example.gevs.data.pojo.Candidate;
+import com.example.gevs.data.pojo.Voter;
 import com.example.gevs.databinding.FragmentVoterSettingsBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.List;
 
 public class VoterSettingsFragment extends Fragment {
 
     FragmentVoterSettingsBinding binding;
     private FirebaseAuth mAuth;
+    BaseRepository baseRepository;
 
     public VoterSettingsFragment() {
         // Required empty public constructor
@@ -31,6 +38,18 @@ public class VoterSettingsFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_voter_settings, container, false);
 
         mAuth = FirebaseAuth.getInstance();
+        baseRepository = new BaseRepository();
+
+        if (mAuth.getCurrentUser() != null) {
+            baseRepository.getVoter(mAuth.getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<Voter>() {
+                @Override
+                public void onChanged(Voter voter) {
+                    if (voter != null) {
+                        binding.voterName.setText(voter.getFullName());
+                    }
+                }
+            });
+        }
 
         binding.aboutText.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -10,6 +10,7 @@ import com.example.gevs.data.BaseDataSource;
 import com.example.gevs.data.pojo.Candidate;
 import com.example.gevs.data.pojo.DistrictVote;
 import com.example.gevs.data.pojo.ElectionResult;
+import com.example.gevs.data.pojo.Vote;
 import com.example.gevs.data.pojo.Voter;
 import com.example.gevs.util.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
@@ -312,7 +314,99 @@ public class GevsRemoteDataSource implements BaseDataSource {
 
     @Override
     public void stopElection() {
-        firebaseDatabase.getReference(Constants.KEY_RESULTS + "/" + "status").setValue(Constants.ELECTION_STATUS_COMPLETED);
+        firebaseDatabase.getReference(Constants.KEY_RESULTS + "/status").setValue(Constants.ELECTION_STATUS_COMPLETED);
+    }
+
+    @Override
+    public LiveData<Candidate> getCandidateById(String id) {
+        DatabaseReference databaseReference = firebaseDatabase.getReference(Constants.KEY_CANDIDATES + "/" + id);
+        final MutableLiveData<Candidate> data = new MutableLiveData<>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                data.setValue(snapshot.getValue(Candidate.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return data;
+    }
+
+    @Override
+    public void incrementVoteCount(String constituency, String party) {
+        firebaseDatabase.getReference(Constants.KEY_CONSTITUENCY + "/" + constituency + "/result/" + party + "/vote").setValue(ServerValue.increment(1));
+    }
+
+    @Override
+    public void saveVote(String userId, Vote vote) {
+        firebaseDatabase.getReference(Constants.KEY_VOTE + "/" + userId).setValue(vote);
+    }
+
+    @Override
+    public LiveData<Boolean> hasVoted(String userId) {
+        DatabaseReference dbRef = firebaseDatabase.getReference(Constants.KEY_VOTE);
+        final MutableLiveData<Boolean> data = new MutableLiveData<>();
+        dbRef.orderByKey().equalTo(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // voted
+                    data.setValue(true);
+                } else {
+                    // not voted
+                    data.setValue(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return data;
+    }
+
+    @Override
+    public LiveData<Vote> getVote(String userId) {
+        DatabaseReference databaseReference = firebaseDatabase.getReference(Constants.KEY_VOTE + "/" + userId);
+        final MutableLiveData<Vote> data = new MutableLiveData<>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Vote vote = dataSnapshot.getValue(Vote.class);
+                data.setValue(vote);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+        return data;
+    }
+
+    @Override
+    public LiveData<List<Vote>> getVotesByTime() {
+        DatabaseReference databaseReference = firebaseDatabase.getReference(Constants.KEY_VOTE);
+        final MutableLiveData<List<Vote>> data = new MutableLiveData<>();
+        databaseReference.orderByChild("voteTime").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Vote> voteList = new ArrayList<>();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Vote vote = dataSnapshot1.getValue(Vote.class);
+                    voteList.add(vote);
+                }
+                data.setValue(voteList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+        return data;
     }
 
 }

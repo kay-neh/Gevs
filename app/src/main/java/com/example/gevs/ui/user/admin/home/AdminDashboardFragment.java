@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,12 +19,16 @@ import com.example.gevs.data.pojo.Candidate;
 import com.example.gevs.data.pojo.DistrictVote;
 import com.example.gevs.data.pojo.ElectionResult;
 import com.example.gevs.data.pojo.SeatCount;
+import com.example.gevs.data.pojo.Vote;
 import com.example.gevs.data.pojo.VoteCount;
 import com.example.gevs.databinding.FragmentAdminDashboardBinding;
+import com.example.gevs.ui.user.adapters.VoteAdapter;
+import com.example.gevs.ui.user.adapters.VoterAdapter;
 import com.example.gevs.util.Constants;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,6 +36,7 @@ public class AdminDashboardFragment extends Fragment {
 
     FragmentAdminDashboardBinding binding;
     BaseRepository baseRepository;
+    VoteAdapter voteAdapter;
 
     public AdminDashboardFragment() {
         // Required empty public constructor
@@ -43,6 +49,7 @@ public class AdminDashboardFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_admin_dashboard, container, false);
 
         baseRepository = new BaseRepository();
+        initAdapter();
 
         binding.startElectionFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +65,16 @@ public class AdminDashboardFragment extends Fragment {
             }
         });
 
+        baseRepository.getVotesByTime().observe(getViewLifecycleOwner(), new Observer<List<Vote>>() {
+            @Override
+            public void onChanged(List<Vote> votes) {
+                if (votes != null) {
+                    Collections.reverse(votes);
+                    voteAdapter.setList(votes);
+                }
+            }
+        });
+
         baseRepository.getElectionStatus().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -67,18 +84,30 @@ public class AdminDashboardFragment extends Fragment {
                         binding.stopElectionFab.setVisibility(View.VISIBLE);
                         binding.electionStateTextview.setText("Ongoing");
                         binding.electionTimer.setVisibility(View.VISIBLE);
+                        binding.adminLiveUpdateRecyclerview.setVisibility(View.VISIBLE);
+                        binding.adminLiveUpdateEmptyState.setVisibility(View.GONE);
                     }
                     if (s.equals(Constants.ELECTION_STATUS_COMPLETED)) {
                         binding.startElectionFab.setVisibility(View.VISIBLE);
                         binding.stopElectionFab.setVisibility(View.GONE);
                         binding.electionStateTextview.setText("Starts soon");
                         binding.electionTimer.setVisibility(View.GONE);
+                        binding.adminLiveUpdateRecyclerview.setVisibility(View.GONE);
+                        binding.adminLiveUpdateEmptyState.setVisibility(View.VISIBLE);
                     }
                 }
             }
         });
 
         return binding.getRoot();
+    }
+
+    public void initAdapter() {
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        binding.adminLiveUpdateRecyclerview.setLayoutManager(llm);
+        binding.adminLiveUpdateRecyclerview.setHasFixedSize(true);
+        voteAdapter = new VoteAdapter();
+        binding.adminLiveUpdateRecyclerview.setAdapter(voteAdapter);
     }
 
     public void showElectionConfirmationDialog(boolean state) {
