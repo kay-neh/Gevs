@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.gevs.data.pojo.Candidate;
 import com.example.gevs.data.pojo.DistrictVote;
+import com.example.gevs.data.pojo.ElectionResult;
 import com.example.gevs.data.pojo.Voter;
 import com.example.gevs.data.remote.GevsRemoteDataSource;
 
@@ -52,6 +53,30 @@ public class BaseRepository {
 
     public void createElectionData(HashMap<String, DistrictVote> districtVoteHashMap) {
         remoteDataSource.createElectionData(districtVoteHashMap);
+    }
+
+    public LiveData<List<DistrictVote>> getDistrictVotes() {
+        return remoteDataSource.getDistrictVotes();
+    }
+
+    public LiveData<DistrictVote> getDistrictVoteById(String id) {
+        return remoteDataSource.getDistrictVoteById(id);
+    }
+
+    public LiveData<List<Candidate>> getCandidatesByConstituency(String constituency) {
+        return remoteDataSource.getCandidatesByConstituency(constituency);
+    }
+
+    public void createElectionResult(ElectionResult electionResult) {
+        remoteDataSource.createElectionResult(electionResult);
+    }
+
+    public LiveData<String> getElectionStatus() {
+        return remoteDataSource.getElectionStatus();
+    }
+
+    public void stopElection() {
+        remoteDataSource.stopElection();
     }
 
 }

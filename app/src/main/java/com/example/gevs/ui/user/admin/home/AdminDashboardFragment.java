@@ -16,6 +16,8 @@ import com.example.gevs.R;
 import com.example.gevs.data.BaseRepository;
 import com.example.gevs.data.pojo.Candidate;
 import com.example.gevs.data.pojo.DistrictVote;
+import com.example.gevs.data.pojo.ElectionResult;
+import com.example.gevs.data.pojo.SeatCount;
 import com.example.gevs.data.pojo.VoteCount;
 import com.example.gevs.databinding.FragmentAdminDashboardBinding;
 import com.example.gevs.util.Constants;
@@ -56,6 +58,26 @@ public class AdminDashboardFragment extends Fragment {
             }
         });
 
+        baseRepository.getElectionStatus().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null) {
+                    if (s.equals(Constants.ELECTION_STATUS_PENDING)) {
+                        binding.startElectionFab.setVisibility(View.GONE);
+                        binding.stopElectionFab.setVisibility(View.VISIBLE);
+                        binding.electionStateTextview.setText("Ongoing");
+                        binding.electionTimer.setVisibility(View.VISIBLE);
+                    }
+                    if (s.equals(Constants.ELECTION_STATUS_COMPLETED)) {
+                        binding.startElectionFab.setVisibility(View.VISIBLE);
+                        binding.stopElectionFab.setVisibility(View.GONE);
+                        binding.electionStateTextview.setText("Starts soon");
+                        binding.electionTimer.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
+
         return binding.getRoot();
     }
 
@@ -75,12 +97,9 @@ public class AdminDashboardFragment extends Fragment {
         builder.setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if (state) {
-                    binding.startElectionFab.setVisibility(View.GONE);
-                    binding.stopElectionFab.setVisibility(View.VISIBLE);
                     startElection();
                 } else {
-                    binding.startElectionFab.setVisibility(View.VISIBLE);
-                    binding.stopElectionFab.setVisibility(View.GONE);
+                    stopElection();
                 }
             }
         });
@@ -97,7 +116,23 @@ public class AdminDashboardFragment extends Fragment {
 
     public void startElection() {
         createElectionData();
-        //create general result table
+        createElectionResultData();
+    }
+
+    public void stopElection() {
+        // switch state to completed for now
+        baseRepository.stopElection();
+    }
+
+    public void createElectionResultData() {
+        List<SeatCount> seats = new ArrayList<>();
+        seats.add(new SeatCount(Constants.PARTY_BLUE, 0));
+        seats.add(new SeatCount(Constants.PARTY_RED, 0));
+        seats.add(new SeatCount(Constants.PARTY_YELLOW, 0));
+        seats.add(new SeatCount(Constants.PARTY_INDEPENDENT, 0));
+
+        ElectionResult electionResult = new ElectionResult(Constants.ELECTION_STATUS_PENDING, Constants.ELECTION_STATUS_PENDING, seats);
+        baseRepository.createElectionResult(electionResult);
     }
 
     public void createElectionData() {
@@ -161,7 +196,6 @@ public class AdminDashboardFragment extends Fragment {
         for (Candidate c : newFelucia) {
             newFeluciaVoteCount.put(c.getParty(), new VoteCount(c.getName(), c.getParty(), 0L));
         }
-
 
         districtVoteHashMap.put(Constants.CONSTITUENCY_SHANGRI_LA_TOWN, new DistrictVote(Constants.CONSTITUENCY_SHANGRI_LA_TOWN, shangriLaTownVoteCount));
         districtVoteHashMap.put(Constants.CONSTITUENCY_NORTHERN_KUNLUN_MOUNTAIN, new DistrictVote(Constants.CONSTITUENCY_NORTHERN_KUNLUN_MOUNTAIN, northernKunlunMountainVoteCount));
