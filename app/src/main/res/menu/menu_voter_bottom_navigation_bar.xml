@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/voterDashboardFragment"
+        android:enabled="true"
+        android:icon="@drawable/bottom_nav_home"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/voterVoteFragment"
+        android:enabled="true"
+        android:icon="@drawable/outline_how_to_vote_24"
+        android:title="@string/vote" />
+
+    <item
+        android:id="@+id/voterResultsFragment"
+        android:enabled="true"
+        android:icon="@drawable/bottom_nav_result"
+        android:title="@string/results" />
+
+    <item
+        android:id="@+id/voterSettingsFragment"
+        android:enabled="true"
+        android:icon="@drawable/outline_settings_24"
+        android:title="@string/settings" />
+
+</menu>
