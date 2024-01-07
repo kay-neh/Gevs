@@ -9,19 +9,19 @@
     <item
         android:id="@+id/voterVoteFragment"
         android:enabled="true"
-        android:icon="@drawable/outline_how_to_vote_24"
+        android:icon="@drawable/bottom_nav_vote"
         android:title="@string/vote" />
 
     <item
-        android:id="@+id/voterResultsFragment"
+        android:id="@+id/voterResultFragment"
         android:enabled="true"
         android:icon="@drawable/bottom_nav_result"
-        android:title="@string/results" />
+        android:title="@string/result" />
 
     <item
         android:id="@+id/voterSettingsFragment"
         android:enabled="true"
-        android:icon="@drawable/outline_settings_24"
+        android:icon="@drawable/bottom_nav_settings"
         android:title="@string/settings" />
 
 </menu>
