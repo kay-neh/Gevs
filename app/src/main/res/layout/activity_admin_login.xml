@@ -47,7 +47,6 @@
             android:text="Welcome Back"
             android:textAppearance="?attr/textAppearanceHeadline5"
             android:textColor="@color/textColor"
-
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="@+id/textView2"
