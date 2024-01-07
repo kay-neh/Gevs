@@ -1,13 +1,19 @@
 package com.example.gevs.data.remote;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.gevs.data.BaseDataSource;
 import com.example.gevs.data.pojo.Candidate;
+import com.example.gevs.data.pojo.DistrictVote;
+import com.example.gevs.data.pojo.ElectionResult;
 import com.example.gevs.data.pojo.Voter;
 import com.example.gevs.util.Constants;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GevsRemoteDataSource implements BaseDataSource {
@@ -46,13 +53,13 @@ public class GevsRemoteDataSource implements BaseDataSource {
     }
 
     @Override
-    public LiveData<Boolean> isEmailUsed(String email) {
+    public LiveData<Boolean> isExistingEmail(String email) {
         DatabaseReference usersRef = firebaseDatabase.getReference(Constants.KEY_VOTERS);
         final MutableLiveData<Boolean> data = new MutableLiveData<>();
-        usersRef.orderByChild("email").equalTo(email).addValueEventListener(new ValueEventListener() {
+        usersRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
                     data.setValue(true);
                 } else {
                     data.setValue(false);
@@ -60,7 +67,7 @@ public class GevsRemoteDataSource implements BaseDataSource {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
@@ -71,7 +78,7 @@ public class GevsRemoteDataSource implements BaseDataSource {
     public LiveData<Boolean> isUvcValid(String uvc) {
         DatabaseReference universityRef = firebaseDatabase.getReference(Constants.KEY_UVC);
         final MutableLiveData<Boolean> data = new MutableLiveData<>();
-        universityRef.orderByChild(uvc).equalTo(true).addValueEventListener(new ValueEventListener() {
+        universityRef.orderByKey().equalTo(uvc).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -95,7 +102,7 @@ public class GevsRemoteDataSource implements BaseDataSource {
     public LiveData<Boolean> isUvcUsed(String uvc) {
         DatabaseReference usersRef = firebaseDatabase.getReference(Constants.KEY_VOTERS);
         final MutableLiveData<Boolean> data = new MutableLiveData<>();
-        usersRef.orderByChild("uvc").equalTo(uvc).addValueEventListener(new ValueEventListener() {
+        usersRef.orderByChild("uvc").equalTo(uvc).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -119,7 +126,7 @@ public class GevsRemoteDataSource implements BaseDataSource {
     public LiveData<Boolean> isAdmin(String email) {
         DatabaseReference usersRef = firebaseDatabase.getReference(Constants.KEY_VOTERS);
         final MutableLiveData<Boolean> data = new MutableLiveData<>();
-        usersRef.orderByChild("email").equalTo(email).addValueEventListener(new ValueEventListener() {
+        usersRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -210,6 +217,102 @@ public class GevsRemoteDataSource implements BaseDataSource {
             }
         });
         return data;
+    }
+
+    @Override
+    public void createElectionData(HashMap<String, DistrictVote> districtVoteHashMap) {
+        firebaseDatabase.getReference(Constants.KEY_CONSTITUENCY).setValue(districtVoteHashMap);
+    }
+
+    @Override
+    public LiveData<List<DistrictVote>> getDistrictVotes() {
+        DatabaseReference databaseReference = firebaseDatabase.getReference(Constants.KEY_CONSTITUENCY);
+        final MutableLiveData<List<DistrictVote>> data = new MutableLiveData<>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<DistrictVote> districtVoteList = new ArrayList<>();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    DistrictVote districtVote = dataSnapshot1.getValue(DistrictVote.class);
+                    districtVoteList.add(districtVote);
+                }
+                data.setValue(districtVoteList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+        return data;
+    }
+
+    @Override
+    public LiveData<DistrictVote> getDistrictVoteById(String id) {
+        DatabaseReference databaseReference = firebaseDatabase.getReference(Constants.KEY_CONSTITUENCY + "/" + id);
+        final MutableLiveData<DistrictVote> data = new MutableLiveData<>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                DistrictVote districtVote = dataSnapshot.getValue(DistrictVote.class);
+                data.setValue(districtVote);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+        return data;
+    }
+
+    @Override
+    public LiveData<List<Candidate>> getCandidatesByConstituency(String constituency) {
+        DatabaseReference usersRef = firebaseDatabase.getReference(Constants.KEY_CANDIDATES);
+        final MutableLiveData<List<Candidate>> data = new MutableLiveData<>();
+        usersRef.orderByChild("constituency").equalTo(constituency).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<Candidate> candidateList = new ArrayList<>();
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                    Candidate currentCandidate = dataSnapshot1.getValue(Candidate.class);
+                    candidateList.add(currentCandidate);
+                }
+                data.setValue(candidateList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return data;
+    }
+
+    @Override
+    public void createElectionResult(ElectionResult electionResult) {
+        firebaseDatabase.getReference(Constants.KEY_RESULTS).setValue(electionResult);
+    }
+
+    @Override
+    public LiveData<String> getElectionStatus() {
+        DatabaseReference databaseReference = firebaseDatabase.getReference(Constants.KEY_RESULTS + "/" + "status");
+        final MutableLiveData<String> data = new MutableLiveData<>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                data.setValue(snapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return data;
+    }
+
+    @Override
+    public void stopElection() {
+        firebaseDatabase.getReference(Constants.KEY_RESULTS + "/" + "status").setValue(Constants.ELECTION_STATUS_COMPLETED);
     }
 
 }

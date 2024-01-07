@@ -54,4 +54,57 @@
         <item name="fontFamily">@font/manrope_semibold</item>
     </style>
 
+    <!-- MDC3 custom typography-->
+    <style name="TextAppearance.Gevs.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="fontFamily">@font/manrope_light</item>
+    </style>
+
+    <style name="TextAppearance.Gevs.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="fontFamily">@font/manrope_regular</item>
+    </style>
+
+    <style name="TextAppearance.Gevs.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="fontFamily">@font/manrope_semibold</item>
+    </style>
+
+    <style name="TextAppearance.Gevs.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="fontFamily">@font/manrope_semibold</item>
+    </style>
+
+    <style name="TextAppearance.Gevs.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/manrope_semibold</item>
+    </style>
+
+    <style name="TextAppearance.Gevs.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="TextAppearance.Gevs.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+        <item name="fontFamily">@font/manrope_semibold</item>
+    </style>
+
+    <style name="TextAppearance.Gevs.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/manrope_semibold</item>
+    </style>
+
+    <style name="TextAppearance.Gevs.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">@font/manrope_regular</item>
+    </style>
+
+    <style name="TextAppearance.Gevs.BodySmall" parent="TextAppearance.Material3.BodySmall">
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="TextAppearance.Gevs.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/manrope_semibold</item>
+    </style>
+
+    <style name="TextAppearance.Gevs.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+        <item name="fontFamily">@font/manrope_semibold</item>
+    </style>
+
+    <style name="TextAppearance.Gevs.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+        <item name="fontFamily">@font/manrope_semibold</item>
+    </style>
+
 </resources>
