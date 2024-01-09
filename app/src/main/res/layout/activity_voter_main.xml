@@ -34,7 +34,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/voter_homepage_toolbar"
             app:layout_constraintVertical_bias="1.0"
-            app:navGraph="@navigation/admin_nav_graph"/>
+            app:navGraph="@navigation/voter_nav_graph" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/voter_bottom_nav_bar"

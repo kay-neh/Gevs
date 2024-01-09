@@ -5,6 +5,9 @@ import androidx.lifecycle.LiveData;
 import com.example.gevs.data.pojo.Candidate;
 import com.example.gevs.data.pojo.DistrictVote;
 import com.example.gevs.data.pojo.ElectionResult;
+import com.example.gevs.data.pojo.SeatCount;
+import com.example.gevs.data.pojo.Vote;
+import com.example.gevs.data.pojo.VoteCount;
 import com.example.gevs.data.pojo.Voter;
 import com.example.gevs.data.remote.GevsRemoteDataSource;
 
@@ -77,6 +80,58 @@ public class BaseRepository {
 
     public void stopElection() {
         remoteDataSource.stopElection();
+    }
+
+    public LiveData<Candidate> getCandidateById(String id) {
+        return remoteDataSource.getCandidateById(id);
+    }
+
+    public void incrementVoteCount(String constituency, String party) {
+        remoteDataSource.incrementVoteCount(constituency, party);
+    }
+
+    public void saveVote(String userId, Vote vote) {
+        remoteDataSource.saveVote(userId, vote);
+    }
+
+    public LiveData<Boolean> hasVoted(String userId) {
+        return remoteDataSource.hasVoted(userId);
+    }
+
+    public LiveData<Vote> getVote(String userId) {
+        return remoteDataSource.getVote(userId);
+    }
+
+    public LiveData<List<Vote>> getVotesByTime() {
+        return remoteDataSource.getVotesByTime();
+    }
+
+    public LiveData<VoteCount> getConstituencyHighestPartyVote(String constituency) {
+        return remoteDataSource.getConstituencyHighestPartyVote(constituency);
+    }
+
+    public void updateSeatCount(List<SeatCount> seatCountList) {
+        remoteDataSource.updateSeatCount(seatCountList);
+    }
+
+    public void updateWinner(String winner) {
+        remoteDataSource.updateWinner(winner);
+    }
+
+    public void clearVotes() {
+        remoteDataSource.clearVotes();
+    }
+
+    public LiveData<ElectionResult> getElectionResult() {
+        return remoteDataSource.getElectionResult();
+    }
+
+    public void publishResult(Boolean value) {
+        remoteDataSource.publishResult(value);
+    }
+
+    public LiveData<Boolean> isResultPublished() {
+        return remoteDataSource.isResultPublished();
     }
 
 }

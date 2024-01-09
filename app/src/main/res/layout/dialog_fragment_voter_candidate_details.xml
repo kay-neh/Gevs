@@ -1,208 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/dialog_candidate_details_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/candidate_details"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/dialog_candidate_imageCardView"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        app:boxBackgroundColor="?attr/colorSurface"
-        app:cardCornerRadius="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_candidate_details_text">
-
-        <ImageView
-            android:id="@+id/dialog_candidate_imageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            tools:srcCompat="@drawable/img" />
-    </androidx.cardview.widget.CardView>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/dialog_candidate_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="4dp"
-        android:text="Nanami Kento"
-        android:textSize="20sp"
-        android:textAppearance="?attr/textAppearanceBody1"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/dialog_candidate_titles"
-        app:layout_constraintStart_toEndOf="@+id/dialog_candidate_imageCardView"
-        app:layout_constraintTop_toTopOf="@+id/dialog_candidate_imageCardView"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/dialog_candidate_titles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FRN, JDP, PHD."
-        android:textAppearance="?attr/textAppearanceCaption"
-        app:layout_constraintBottom_toBottomOf="@+id/dialog_candidate_imageCardView"
-        app:layout_constraintStart_toStartOf="@+id/dialog_candidate_name"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_candidate_name" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/for_post"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintStart_toStartOf="@+id/dialog_candidate_imageCardView"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_candidate_imageCardView" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/for_post_material_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Member of Parliament (MP)"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintBottom_toBottomOf="@+id/materialTextView"
-        app:layout_constraintStart_toEndOf="@+id/materialTextView"
-        app:layout_constraintTop_toTopOf="@+id/materialTextView" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/party"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintStart_toStartOf="@+id/materialTextView"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/party_material_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Red Party"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintBottom_toBottomOf="@+id/materialTextView2"
-        app:layout_constraintStart_toStartOf="@+id/for_post_material_textView"
-        app:layout_constraintTop_toTopOf="@+id/materialTextView2" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/age"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintStart_toStartOf="@+id/materialTextView2"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView2" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/age_material_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="47"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintBottom_toBottomOf="@+id/materialTextView3"
-        app:layout_constraintStart_toStartOf="@+id/party_material_textView"
-        app:layout_constraintTop_toTopOf="@+id/materialTextView3" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/dob"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintStart_toStartOf="@+id/materialTextView3"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView3" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/dob_material_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Jan. 14th 1890"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintBottom_toBottomOf="@+id/materialTextView4"
-        app:layout_constraintStart_toStartOf="@+id/age_material_textView"
-        app:layout_constraintTop_toTopOf="@+id/materialTextView4" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/constituency"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintStart_toStartOf="@+id/materialTextView4"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView4" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/constituency_material_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Shangri-La"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintBottom_toBottomOf="@+id/materialTextView5"
-        app:layout_constraintStart_toEndOf="@+id/materialTextView5"
-        app:layout_constraintTop_toTopOf="@+id/materialTextView5" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="@string/message"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintStart_toStartOf="@+id/materialTextView5"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView5" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/manifesto_material_textView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="&quot;I would take shangri-la to the next level, investing in education, healthcare and industry, vote for me, vote for competence!!&quot;"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/materialTextView6"
-        app:layout_constraintTop_toTopOf="@+id/materialTextView6" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/dialog_candidate_back_button"
-        style="@style/Widget.MaterialComponents.Button"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="64dp"
-        android:text="Back"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/manifesto_material_textView"
-        app:shapeAppearance="@style/ShapeAppearance.Gevs.SmallComponent" />
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/dialog_candidate_details_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/candidate_details"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/dialog_candidate_imageCardView"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                app:boxBackgroundColor="?attr/colorSurface"
+                app:cardCornerRadius="32dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dialog_candidate_details_text">
+
+                <ImageView
+                    android:id="@+id/dialog_candidate_imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    tools:srcCompat="@drawable/img" />
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/dialog_candidate_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="4dp"
+                android:text="Nanami Kento"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/dialog_candidate_titles"
+                app:layout_constraintStart_toEndOf="@+id/dialog_candidate_imageCardView"
+                app:layout_constraintTop_toTopOf="@+id/dialog_candidate_imageCardView"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/dialog_candidate_titles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FRN, JDP, PHD."
+                android:textAppearance="?attr/textAppearanceCaption"
+                app:layout_constraintBottom_toBottomOf="@+id/dialog_candidate_imageCardView"
+                app:layout_constraintStart_toStartOf="@+id/dialog_candidate_name"
+                app:layout_constraintTop_toBottomOf="@+id/dialog_candidate_name" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/materialTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/for_post"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintStart_toStartOf="@+id/dialog_candidate_imageCardView"
+                app:layout_constraintTop_toBottomOf="@+id/dialog_candidate_imageCardView" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/for_post_material_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Member of Parliament (MP)"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintBottom_toBottomOf="@+id/materialTextView"
+                app:layout_constraintStart_toEndOf="@+id/materialTextView"
+                app:layout_constraintTop_toTopOf="@+id/materialTextView" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/materialTextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/party"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintStart_toStartOf="@+id/materialTextView"
+                app:layout_constraintTop_toBottomOf="@+id/materialTextView" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/party_material_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Red Party"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintBottom_toBottomOf="@+id/materialTextView2"
+                app:layout_constraintStart_toStartOf="@+id/for_post_material_textView"
+                app:layout_constraintTop_toTopOf="@+id/materialTextView2" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/materialTextView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/age"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintStart_toStartOf="@+id/materialTextView2"
+                app:layout_constraintTop_toBottomOf="@+id/materialTextView2" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/age_material_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="47"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintBottom_toBottomOf="@+id/materialTextView3"
+                app:layout_constraintStart_toStartOf="@+id/party_material_textView"
+                app:layout_constraintTop_toTopOf="@+id/materialTextView3" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/materialTextView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/dob"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintStart_toStartOf="@+id/materialTextView3"
+                app:layout_constraintTop_toBottomOf="@+id/materialTextView3" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/dob_material_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jan. 14th 1890"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintBottom_toBottomOf="@+id/materialTextView4"
+                app:layout_constraintStart_toStartOf="@+id/age_material_textView"
+                app:layout_constraintTop_toTopOf="@+id/materialTextView4" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/materialTextView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/constituency"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintStart_toStartOf="@+id/materialTextView4"
+                app:layout_constraintTop_toBottomOf="@+id/materialTextView4" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/constituency_material_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Shangri-La"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintBottom_toBottomOf="@+id/materialTextView5"
+                app:layout_constraintStart_toEndOf="@+id/materialTextView5"
+                app:layout_constraintTop_toTopOf="@+id/materialTextView5" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/materialTextView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:text="@string/message"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintStart_toStartOf="@+id/materialTextView5"
+                app:layout_constraintTop_toBottomOf="@+id/materialTextView5" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/manifesto_material_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="&quot;I would take shangri-la to the next level, investing in education, healthcare and industry, vote for me, vote for competence!!&quot;"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/materialTextView6"
+                app:layout_constraintTop_toTopOf="@+id/materialTextView6" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/dialog_candidate_back_button"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="32dp"
+                android:text="Back"
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/manifesto_material_textView"
+                app:shapeAppearance="@style/ShapeAppearance.Gevs.SmallComponent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
