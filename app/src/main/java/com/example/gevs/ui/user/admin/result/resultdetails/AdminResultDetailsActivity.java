@@ -16,7 +16,6 @@ import com.example.gevs.data.pojo.DistrictVoteCount;
 import com.example.gevs.data.pojo.VoteCount;
 import com.example.gevs.databinding.ActivityAdminResultDetailsBinding;
 import com.example.gevs.ui.user.adapters.VoteCountAdapter;
-import com.example.gevs.ui.user.adapters.VoterAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

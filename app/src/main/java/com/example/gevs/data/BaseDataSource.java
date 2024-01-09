@@ -5,6 +5,9 @@ import androidx.lifecycle.LiveData;
 import com.example.gevs.data.pojo.Candidate;
 import com.example.gevs.data.pojo.DistrictVote;
 import com.example.gevs.data.pojo.ElectionResult;
+import com.example.gevs.data.pojo.SeatCount;
+import com.example.gevs.data.pojo.Vote;
+import com.example.gevs.data.pojo.VoteCount;
 import com.example.gevs.data.pojo.Voter;
 
 import java.util.HashMap;
@@ -40,5 +43,31 @@ public interface BaseDataSource {
     LiveData<String> getElectionStatus();
 
     void stopElection();
+
+    LiveData<Candidate> getCandidateById(String id);
+
+    void incrementVoteCount(String constituency, String party);
+
+    void saveVote(String userId, Vote vote);
+
+    LiveData<Boolean> hasVoted(String userId);
+
+    LiveData<Vote> getVote(String userId);
+
+    LiveData<List<Vote>> getVotesByTime();
+
+    LiveData<VoteCount> getConstituencyHighestPartyVote(String constituency);
+
+    void updateSeatCount(List<SeatCount> seatCountList);
+
+    void updateWinner(String winner);
+
+    void clearVotes();
+
+    LiveData<ElectionResult> getElectionResult();
+
+    void publishResult(Boolean value);
+
+    LiveData<Boolean> isResultPublished();
 
 }

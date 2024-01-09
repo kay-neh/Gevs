@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -13,10 +14,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.gevs.R;
+import com.example.gevs.data.BaseRepository;
 import com.example.gevs.databinding.ActivityAdminMainBinding;
 import com.example.gevs.ui.auth.loginvoter.VoterLoginActivity;
+import com.example.gevs.util.Constants;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,11 +30,14 @@ public class AdminMainActivity extends AppCompatActivity {
     ActivityAdminMainBinding binding;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
+    BaseRepository baseRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_admin_main);
+
+        baseRepository = new BaseRepository();
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         assert navHostFragment != null;
@@ -60,6 +67,9 @@ public class AdminMainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
+                if (id == R.id.home_publish) {
+                    showPublishDialog();
+                }
                 if (id == R.id.home_about) {
                     showAboutDialog();
                 }
@@ -70,6 +80,55 @@ public class AdminMainActivity extends AppCompatActivity {
                     showLogOutDialog();
                 }
                 return false;
+            }
+        });
+
+        baseRepository.getElectionStatus().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null) {
+                    if (s.equals(Constants.ELECTION_STATUS_PENDING)) {
+                        controller.addOnDestinationChangedListener((navController, navDestination, bundle) -> {
+                            if (navDestination.getId() == R.id.adminDashboardFragment) {
+                                binding.adminHomepageToolbar.getMenu().clear();
+                                binding.adminHomepageToolbar.inflateMenu(R.menu.menu_toolbar);
+                            }
+                            if (navDestination.getId() == R.id.adminVotersFragment) {
+                                binding.adminHomepageToolbar.getMenu().clear();
+                                binding.adminHomepageToolbar.inflateMenu(R.menu.menu_toolbar);
+                            }
+                            if (navDestination.getId() == R.id.adminCandidatesFragment) {
+                                binding.adminHomepageToolbar.getMenu().clear();
+                                binding.adminHomepageToolbar.inflateMenu(R.menu.menu_toolbar);
+                            }
+                            if (navDestination.getId() == R.id.adminResultFragment) {
+                                binding.adminHomepageToolbar.getMenu().clear();
+                                binding.adminHomepageToolbar.inflateMenu(R.menu.menu_toolbar);
+                            }
+                        });
+                    }
+                    if (s.equals(Constants.ELECTION_STATUS_COMPLETED)) {
+                        controller.addOnDestinationChangedListener((navController, navDestination, bundle) -> {
+                            if (navDestination.getId() == R.id.adminDashboardFragment) {
+                                binding.adminHomepageToolbar.getMenu().clear();
+                                binding.adminHomepageToolbar.inflateMenu(R.menu.menu_toolbar);
+                            }
+                            if (navDestination.getId() == R.id.adminVotersFragment) {
+                                binding.adminHomepageToolbar.getMenu().clear();
+                                binding.adminHomepageToolbar.inflateMenu(R.menu.menu_toolbar);
+                            }
+                            if (navDestination.getId() == R.id.adminCandidatesFragment) {
+                                binding.adminHomepageToolbar.getMenu().clear();
+                                binding.adminHomepageToolbar.inflateMenu(R.menu.menu_toolbar);
+                            }
+                            if (navDestination.getId() == R.id.adminResultFragment) {
+                                binding.adminHomepageToolbar.getMenu().clear();
+                                binding.adminHomepageToolbar.inflateMenu(R.menu.menu_toolbar_publish);
+                            }
+                        });
+
+                    }
+                }
             }
         });
 
@@ -112,6 +171,21 @@ public class AdminMainActivity extends AppCompatActivity {
         builder.setMessage(R.string.lorem_ipsum);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setCancelable(false);
+        builder.show();
+    }
+
+    public void showPublishDialog() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+        builder.setTitle("Publish Result?");
+        builder.setMessage("You are about to publish the election results!");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                baseRepository.publishResult(true);
                 dialog.dismiss();
             }
         });

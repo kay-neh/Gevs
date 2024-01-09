@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.user.voter.settings.VoterSettingsFragment">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/voter_imageCardView"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="32dp"
+            app:boxBackgroundColor="?attr/colorSurface"
+            app:cardCornerRadius="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/voter_imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/img" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/voter_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Jack Brown"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintEnd_toEndOf="@+id/voter_imageCardView"
+            app:layout_constraintStart_toStartOf="@+id/voter_imageCardView"
+            app:layout_constraintTop_toBottomOf="@+id/voter_imageCardView" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/voter_name"
+            app:layout_constraintStart_toEndOf="@+id/voter_name"
+            app:layout_constraintTop_toTopOf="@+id/voter_name"
+            app:srcCompat="@drawable/baseline_verified_24" />
+
+        <TextView
+            android:id="@+id/voter_constituency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Shangri-la-Town Constituency"
+            android:textAppearance="?attr/textAppearanceCaption"
+            app:layout_constraintEnd_toEndOf="@+id/voter_name"
+            app:layout_constraintStart_toStartOf="@+id/voter_name"
+            app:layout_constraintTop_toBottomOf="@+id/voter_name" />
+
+        <TextView
+            android:id="@+id/darkmode_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="DarkMode"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/voter_constituency" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/darkmode_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/darkmode_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/darkmode_text" />
+
+        <TextView
+            android:id="@+id/about_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="About"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintStart_toStartOf="@+id/darkmode_text"
+            app:layout_constraintTop_toBottomOf="@+id/darkmode_text" />
+
+        <TextView
+            android:id="@+id/log_out_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Log Out"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textColor="@color/red"
+            app:layout_constraintStart_toStartOf="@+id/about_text"
+            app:layout_constraintTop_toBottomOf="@+id/about_text" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
