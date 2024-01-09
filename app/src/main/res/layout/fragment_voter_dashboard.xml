@@ -133,7 +133,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:text="Ends in 58:02"
+                        android:text="Ends soon!"
                         android:visibility="gone"
                         android:textAppearance="?attr/textAppearanceSubtitle2"
                         app:layout_constraintBottom_toBottomOf="@+id/voter_dashboard_election_state_textview"

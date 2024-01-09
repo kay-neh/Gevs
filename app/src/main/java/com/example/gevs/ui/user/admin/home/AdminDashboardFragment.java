@@ -5,10 +5,11 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import com.example.gevs.R;
 import com.example.gevs.data.BaseRepository;
 import com.example.gevs.data.pojo.Candidate;
+import com.example.gevs.data.pojo.DistrictPartyWinner;
 import com.example.gevs.data.pojo.DistrictVote;
 import com.example.gevs.data.pojo.ElectionResult;
 import com.example.gevs.data.pojo.SeatCount;
@@ -23,14 +25,15 @@ import com.example.gevs.data.pojo.Vote;
 import com.example.gevs.data.pojo.VoteCount;
 import com.example.gevs.databinding.FragmentAdminDashboardBinding;
 import com.example.gevs.ui.user.adapters.VoteAdapter;
-import com.example.gevs.ui.user.adapters.VoterAdapter;
 import com.example.gevs.util.Constants;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AdminDashboardFragment extends Fragment {
 
@@ -116,11 +119,11 @@ public class AdminDashboardFragment extends Fragment {
         if (state) {
             positiveButtonText = getResources().getString(R.string.start);
             builder.setTitle("Start General Election");
-            builder.setMessage("You are about to start the General Election for Shangri-la Valley");
+            builder.setMessage("You are about to start the General Election for Shangri-La Valley");
         } else {
             positiveButtonText = getResources().getString(R.string.stop);
             builder.setTitle("Stop General Election");
-            builder.setMessage("You are about to stop the General Election for Shangri-la Valley");
+            builder.setMessage("You are about to stop the General Election for Shangri-La Valley");
         }
 
         builder.setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
@@ -144,13 +147,88 @@ public class AdminDashboardFragment extends Fragment {
     }
 
     public void startElection() {
+        baseRepository.clearVotes();
         createElectionData();
         createElectionResultData();
+        baseRepository.publishResult(false);
     }
 
     public void stopElection() {
         // switch state to completed for now
         baseRepository.stopElection();
+        computeWinner().observe(getViewLifecycleOwner(), new Observer<List<DistrictPartyWinner>>() {
+            @Override
+            public void onChanged(List<DistrictPartyWinner> districtPartyWinners) {
+                if (districtPartyWinners != null) {
+                    List<String> winningParties = new ArrayList<>();
+                    for (DistrictPartyWinner w : districtPartyWinners) {
+                        winningParties.add(w.getParty());
+                    }
+                    // check value with max occurrence
+                    getWinningParty(winningParties);
+                }
+            }
+        });
+    }
+
+    public LiveData<List<DistrictPartyWinner>> computeWinner() {
+        String[] allConstituency = getResources().getStringArray(R.array.constituency);
+        final MutableLiveData<List<DistrictPartyWinner>> data = new MutableLiveData<>();
+        List<DistrictPartyWinner> districtPartyWinners = new ArrayList<>();
+        for (String s : allConstituency) {
+            baseRepository.getConstituencyHighestPartyVote(s).observe(getViewLifecycleOwner(), new Observer<VoteCount>() {
+                @Override
+                public void onChanged(VoteCount voteCount) {
+                    if (voteCount != null) {
+                        if (voteCount.getVote() > 0) {
+                            districtPartyWinners.add(new DistrictPartyWinner(s, voteCount.getParty(), voteCount.getName()));
+                            data.setValue(districtPartyWinners);
+                        }
+                    }
+                }
+            });
+        }
+        return data;
+    }
+
+    public void getWinningParty(List<String> winningParties) {
+        Set<String> winningPartiesSet = new HashSet<>(winningParties);
+        List<SeatCount> seatCountList = new ArrayList<>();
+        for (String key : winningPartiesSet) {
+            System.out.println(key + ": " + Collections.frequency(winningParties, key));
+            seatCountList.add(new SeatCount(key, Collections.frequency(winningParties, key)));
+        }
+        updateResult(seatCountList);
+    }
+
+    public void updateResult(List<SeatCount> seatCountList) {
+        List<SeatCount> seats = new ArrayList<>();
+        seats.add(new SeatCount(Constants.PARTY_BLUE, 0));
+        seats.add(new SeatCount(Constants.PARTY_RED, 0));
+        seats.add(new SeatCount(Constants.PARTY_YELLOW, 0));
+        seats.add(new SeatCount(Constants.PARTY_INDEPENDENT, 0));
+
+        for (SeatCount s : seats) {
+            for (SeatCount t : seatCountList) {
+                if (s.getParty().equals(t.getParty())) {
+                    s.setSeat(t.getSeat());
+                }
+            }
+        }
+
+        // push result to db
+        baseRepository.updateSeatCount(seats);
+        baseRepository.updateWinner(declareWinner(seats));
+    }
+
+    public String declareWinner(List<SeatCount> seats) {
+        String winner = Constants.HUNG_PARLIAMENT;
+        for (SeatCount s : seats) {
+            if (s.getSeat() >= 3) {
+                winner = s.getParty();
+            }
+        }
+        return winner;
     }
 
     public void createElectionResultData() {

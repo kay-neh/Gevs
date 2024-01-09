@@ -106,6 +106,7 @@ public class VoterVoteFragment extends Fragment {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean != null) {
+                    candidateVoteList.clear();
                     if (aBoolean) {
                         // has voted
                         baseRepository.getVote(userId).observe(getViewLifecycleOwner(), new Observer<Vote>() {

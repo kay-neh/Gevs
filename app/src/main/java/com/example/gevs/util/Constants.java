@@ -8,6 +8,7 @@ public class Constants {
     public static final String KEY_CONSTITUENCY = "constituency";
     public static final String KEY_RESULTS = "results";
     public static final String KEY_VOTE = "vote";
+    public static final String KEY_PUBLISH = "publish";
 
 
     public static final String ROLE_VOTER = "Voter";
@@ -17,6 +18,7 @@ public class Constants {
     public static final String PARTY_RED = "Red Party";
     public static final String PARTY_YELLOW = "Yellow Party";
     public static final String PARTY_INDEPENDENT = "Independent Party";
+    public static final String HUNG_PARLIAMENT = "Hung Parliament";
 
 
     public static final String CONSTITUENCY_SHANGRI_LA_TOWN = "Shangri-la-Town";

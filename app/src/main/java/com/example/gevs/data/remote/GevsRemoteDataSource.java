@@ -10,7 +10,9 @@ import com.example.gevs.data.BaseDataSource;
 import com.example.gevs.data.pojo.Candidate;
 import com.example.gevs.data.pojo.DistrictVote;
 import com.example.gevs.data.pojo.ElectionResult;
+import com.example.gevs.data.pojo.SeatCount;
 import com.example.gevs.data.pojo.Vote;
+import com.example.gevs.data.pojo.VoteCount;
 import com.example.gevs.data.pojo.Voter;
 import com.example.gevs.util.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +28,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class GevsRemoteDataSource implements BaseDataSource {
 
@@ -400,6 +403,99 @@ public class GevsRemoteDataSource implements BaseDataSource {
                     voteList.add(vote);
                 }
                 data.setValue(voteList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+        return data;
+    }
+
+    @Override
+    public LiveData<VoteCount> getConstituencyHighestPartyVote(String constituency) {
+        DatabaseReference databaseReference = firebaseDatabase.getReference(Constants.KEY_CONSTITUENCY + "/" + constituency + "/result");
+        final MutableLiveData<VoteCount> data = new MutableLiveData<>();
+        databaseReference.orderByChild("vote").limitToLast(2).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<VoteCount> voteCountList = new ArrayList<>();
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                    VoteCount voteCount = dataSnapshot1.getValue(VoteCount.class);
+                    voteCountList.add(voteCount);
+                }
+                // code
+                if (voteCountList.size() == 1) {
+                    data.setValue(voteCountList.get(0));
+                }
+                if (voteCountList.size() == 2) {
+                    // check for equal or greater value then return appropriate value
+                    if (!Objects.equals(voteCountList.get(0).getVote(), voteCountList.get(1).getVote())) {
+                        if (voteCountList.get(0).getVote() > voteCountList.get(1).getVote()) {
+                            data.setValue(voteCountList.get(0));
+                        } else {
+                            data.setValue(voteCountList.get(1));
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return data;
+    }
+
+    @Override
+    public void updateSeatCount(List<SeatCount> seatCountList) {
+        firebaseDatabase.getReference(Constants.KEY_RESULTS + "/seats").setValue(seatCountList);
+    }
+
+    @Override
+    public void updateWinner(String winner) {
+        firebaseDatabase.getReference(Constants.KEY_RESULTS + "/winner").setValue(winner);
+    }
+
+    @Override
+    public void clearVotes() {
+        firebaseDatabase.getReference(Constants.KEY_VOTE).setValue(null);
+    }
+
+    @Override
+    public LiveData<ElectionResult> getElectionResult() {
+        DatabaseReference databaseReference = firebaseDatabase.getReference(Constants.KEY_RESULTS);
+        final MutableLiveData<ElectionResult> data = new MutableLiveData<>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ElectionResult electionResult = dataSnapshot.getValue(ElectionResult.class);
+                data.setValue(electionResult);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+        return data;
+    }
+
+    @Override
+    public void publishResult(Boolean value) {
+        firebaseDatabase.getReference(Constants.KEY_PUBLISH + "/Publish Result").setValue(value);
+    }
+
+    @Override
+    public LiveData<Boolean> isResultPublished() {
+        DatabaseReference databaseReference = firebaseDatabase.getReference(Constants.KEY_PUBLISH + "/Publish Result");
+        final MutableLiveData<Boolean> data = new MutableLiveData<>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Boolean value = dataSnapshot.getValue(Boolean.class);
+                data.setValue(value);
             }
 
             @Override

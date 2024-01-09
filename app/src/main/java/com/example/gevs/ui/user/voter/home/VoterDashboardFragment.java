@@ -54,6 +54,7 @@ public class VoterDashboardFragment extends Fragment {
                 public void onChanged(Voter voter) {
                     if (voter != null) {
                         binding.voterDashboardNameText.setText(voter.getFullName() + "!");
+                        binding.voterDashboardConstituencyTextview.setText(voter.getConstituency() + " Constituency");
                         baseRepository.getCandidatesByConstituency(voter.getConstituency()).observe(getViewLifecycleOwner(), new Observer<List<Candidate>>() {
                             @Override
                             public void onChanged(List<Candidate> candidateList) {

@@ -46,6 +46,7 @@ public class VoterSettingsFragment extends Fragment {
                 public void onChanged(Voter voter) {
                     if (voter != null) {
                         binding.voterName.setText(voter.getFullName());
+                        binding.voterConstituency.setText(voter.getConstituency() + " Constituency");
                     }
                 }
             });
