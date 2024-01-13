@@ -127,6 +127,19 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
+                <Button
+                    android:id="@+id/publish_election_result_btn"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="Publish"
+                    android:visibility="visible"
+                    app:icon="@drawable/baseline_send_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/election_result_card" />
+
                 <TextView
                     android:id="@+id/textView11"
                     android:layout_width="wrap_content"
@@ -136,7 +149,7 @@
                     android:text="Constituency Vote Result"
                     android:textAppearance="?attr/textAppearanceBody1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/election_result_card" />
+                    app:layout_constraintTop_toBottomOf="@+id/publish_election_result_btn" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/admin_district_result_recyclerview"

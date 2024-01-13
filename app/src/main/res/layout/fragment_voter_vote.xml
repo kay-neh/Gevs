@@ -38,11 +38,11 @@
                 android:id="@+id/admin_voters_empty_image"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/illustration_live_update" />
+                app:srcCompat="@drawable/undraw_voting" />
 
             <TextView
                 android:id="@+id/admin_voters_empty_text"
