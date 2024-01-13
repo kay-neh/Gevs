@@ -5,24 +5,7 @@
     <color name="colorPrimary">#0C4FEC</color>
     <color name="colorSecondary">#0C4FEC</color>
 
-    <!--    <color name="colorSurface">#F5F5F5</color>-->
-    <!--    <color name="colorOnSurface">@color/colorPrimary</color>-->
-    <!--    <color name="colorBackground">#F5F5F5</color>-->
-
     <color name="textColor">@color/black</color>
-    <!--    <color name="textColor2">@color/white</color>-->
-    <!--    <color name="textButtonColor">@color/colorPrimary</color>-->
-    <!--    <color name="iconColor2">#383838</color>-->
-    <!--    <color name="toolbarColor">@color/colorPrimary</color>-->
-
-    <!--    <color name="iconColor">#000000</color>-->
-    <!--    <color name="snackBarColor">#383838</color>-->
-    <!--    <color name="dividerColor">#B4BAC0</color>-->
-    <!--    <color name="cardDetailsColor">#4A7BA7</color>-->
-    <!--    <color name="cardDetailsTextColor">@color/colorOnSurface</color>-->
-
-    <color name="cardViewBackgroundColor">@color/white</color>
-    <color name="constrainBackgroundColor">#dedede</color>
     <color name="verify">#00E676</color>
     <color name="unverify">#FF6E40</color>
 
@@ -33,6 +16,9 @@
 
     <color name="green">#00C853</color>
     <color name="red">#F44336</color>
+
+    <color name="cardViewBackgroundColor">@color/white</color>
+    <color name="constrainBackgroundColor">#dedede</color>
 
 
     <!-- material 3 color -->

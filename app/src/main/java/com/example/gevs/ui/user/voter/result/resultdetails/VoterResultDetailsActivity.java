@@ -17,6 +17,7 @@ import com.example.gevs.data.pojo.VoteCount;
 import com.example.gevs.databinding.ActivityVoterResultDetailsBinding;
 import com.example.gevs.ui.user.adapters.VoteCountAdapter;
 import com.example.gevs.ui.user.admin.result.resultdetails.AdminResultDetailsActivity;
+import com.example.gevs.util.NoteDecoration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,6 +68,11 @@ public class VoterResultDetailsActivity extends AppCompatActivity {
 
     public void initAdapter() {
         LinearLayoutManager llm = new LinearLayoutManager(this);
+        int spacing = 16;
+        binding.adminVoteCountRecyclerview.setPadding(spacing, spacing, spacing, spacing);
+        binding.adminVoteCountRecyclerview.setClipToPadding(false);
+        binding.adminVoteCountRecyclerview.setClipChildren(false);
+        binding.adminVoteCountRecyclerview.addItemDecoration(new NoteDecoration(spacing));
         binding.adminVoteCountRecyclerview.setLayoutManager(llm);
         binding.adminVoteCountRecyclerview.setHasFixedSize(true);
         voteCountAdapter = new VoteCountAdapter();

@@ -2,6 +2,7 @@ package com.example.gevs.ui.user.admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.navigation.NavController;
@@ -9,10 +10,15 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.UiModeManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.example.gevs.R;
 import com.example.gevs.data.BaseRepository;
@@ -29,10 +35,19 @@ public class AdminMainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authStateListener;
     BaseRepository baseRepository;
 
+    int themeMode;
+    SharedPreferences preferences;
+    int checkedItemPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_admin_main);
+
+        // get defPreference and themeMode
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        themeMode = preferences.getInt("ThemeMode", AppCompatDelegate.MODE_NIGHT_NO);
+        applyThemeMode(themeMode);
 
         baseRepository = new BaseRepository();
 
@@ -68,7 +83,7 @@ public class AdminMainActivity extends AppCompatActivity {
                     showAboutDialog();
                 }
                 if (id == R.id.home_dark_mode) {
-
+                    showThemeSelectionDialog();
                 }
                 if (id == R.id.home_log_out) {
                     showLogOutDialog();
@@ -121,6 +136,60 @@ public class AdminMainActivity extends AppCompatActivity {
 
         builder.setCancelable(false);
         builder.show();
+    }
+
+    public void showThemeSelectionDialog() {
+        MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(AdminMainActivity.this)
+                .setTitle("Choose Theme")
+                .setSingleChoiceItems(R.array.theme_mode, getCheckedItemPosition(), null)
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        ListView lw = ((androidx.appcompat.app.AlertDialog) dialogInterface).getListView();
+                        int checkedItem = lw.getCheckedItemPosition();
+
+                        switch (checkedItem) {
+                            case 0:
+                                themeMode = AppCompatDelegate.MODE_NIGHT_YES;
+                                break;
+                            case 1:
+                                themeMode = AppCompatDelegate.MODE_NIGHT_NO;
+                        }
+
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("ThemeMode", themeMode);
+                        editor.apply();
+
+                        applyThemeMode(themeMode);
+                    }
+                });
+
+        materialAlertDialogBuilder.create().show();
+    }
+
+    protected void applyThemeMode(int themeMode) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            UiModeManager manager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
+            manager.setApplicationNightMode(themeMode);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(themeMode);
+        }
+    }
+
+    protected int getCheckedItemPosition() {
+        if (themeMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            checkedItemPosition = 0;
+        } else if (themeMode == AppCompatDelegate.MODE_NIGHT_NO) {
+            checkedItemPosition = 1;
+        }
+        return checkedItemPosition;
     }
 
 }

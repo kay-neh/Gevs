@@ -63,46 +63,79 @@
             app:layout_constraintStart_toStartOf="@+id/voter_name"
             app:layout_constraintTop_toBottomOf="@+id/voter_name" />
 
+        <ImageView
+            android:id="@+id/darkmode_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="@+id/darkmode_summary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/darkmode_text"
+            app:srcCompat="@drawable/outline_dark_mode_24" />
+
         <TextView
             android:id="@+id/darkmode_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:text="DarkMode"
             android:textAppearance="?attr/textAppearanceBody1"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/darkmode_img"
             app:layout_constraintTop_toBottomOf="@+id/voter_constituency" />
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/darkmode_switch"
+        <TextView
+            android:id="@+id/darkmode_summary"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/darkmode_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/darkmode_text" />
+            android:text="On"
+            android:textAppearance="?attr/textAppearanceCaption"
+            app:layout_constraintStart_toStartOf="@+id/darkmode_text"
+            app:layout_constraintTop_toBottomOf="@+id/darkmode_text" />
+
+        <ImageView
+            android:id="@+id/about_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/darkmode_summary"
+            app:srcCompat="@drawable/outline_info_24" />
 
         <TextView
             android:id="@+id/about_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:text="About"
             android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintBottom_toBottomOf="@+id/about_img"
             app:layout_constraintStart_toStartOf="@+id/darkmode_text"
-            app:layout_constraintTop_toBottomOf="@+id/darkmode_text" />
+            app:layout_constraintTop_toTopOf="@+id/about_img" />
+
+        <ImageView
+            android:id="@+id/logout_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="46dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/about_text"
+            app:srcCompat="@drawable/baseline_power_settings_new_24" />
 
         <TextView
             android:id="@+id/log_out_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:text="Log Out"
             android:textAppearance="?attr/textAppearanceBody1"
             android:textColor="@color/red"
+            app:layout_constraintBottom_toBottomOf="@+id/logout_img"
             app:layout_constraintStart_toStartOf="@+id/about_text"
-            app:layout_constraintTop_toBottomOf="@+id/about_text" />
+            app:layout_constraintTop_toTopOf="@+id/logout_img" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
