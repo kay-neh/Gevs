@@ -18,12 +18,10 @@ import com.example.gevs.data.pojo.DistrictVote;
 import com.example.gevs.data.pojo.ElectionResult;
 import com.example.gevs.databinding.FragmentVoterResultBinding;
 import com.example.gevs.ui.user.adapters.ConstituencyAdapter;
-import com.example.gevs.ui.user.admin.result.analytics.AdminAnalyticsActivity;
-import com.example.gevs.ui.user.admin.result.resultdetails.AdminResultDetailsActivity;
 import com.example.gevs.ui.user.voter.result.analytics.VoterAnalyticsActivity;
 import com.example.gevs.ui.user.voter.result.resultdetails.VoterResultDetailsActivity;
 import com.example.gevs.util.Constants;
-import com.example.gevs.util.NoteDecoration;
+import com.example.gevs.util.CardDecoration;
 
 import java.util.List;
 
@@ -124,7 +122,7 @@ public class VoterResultFragment extends Fragment {
         binding.adminDistrictResultRecyclerview.setPadding(spacing, spacing, spacing, spacing);
         binding.adminDistrictResultRecyclerview.setClipToPadding(false);
         binding.adminDistrictResultRecyclerview.setClipChildren(false);
-        binding.adminDistrictResultRecyclerview.addItemDecoration(new NoteDecoration(spacing));
+        binding.adminDistrictResultRecyclerview.addItemDecoration(new CardDecoration(spacing));
         binding.adminDistrictResultRecyclerview.setLayoutManager(glm);
         binding.adminDistrictResultRecyclerview.setHasFixedSize(true);
         constituencyAdapter = new ConstituencyAdapter(new ConstituencyAdapter.ListItemClickListener() {

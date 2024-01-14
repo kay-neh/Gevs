@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -22,10 +23,17 @@ import com.example.gevs.ui.user.adapters.ConstituencyAdapter;
 import com.example.gevs.ui.user.admin.result.analytics.AdminAnalyticsActivity;
 import com.example.gevs.ui.user.admin.result.resultdetails.AdminResultDetailsActivity;
 import com.example.gevs.util.Constants;
-import com.example.gevs.util.NoteDecoration;
+import com.example.gevs.util.CardDecoration;
+import com.example.gevs.util.FCMSender;
+import com.example.gevs.util.NotificationMessage;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.io.IOException;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class AdminResultFragment extends Fragment {
 
@@ -150,7 +158,7 @@ public class AdminResultFragment extends Fragment {
         binding.adminDistrictResultRecyclerview.setPadding(spacing, spacing, spacing, spacing);
         binding.adminDistrictResultRecyclerview.setClipToPadding(false);
         binding.adminDistrictResultRecyclerview.setClipChildren(false);
-        binding.adminDistrictResultRecyclerview.addItemDecoration(new NoteDecoration(spacing));
+        binding.adminDistrictResultRecyclerview.addItemDecoration(new CardDecoration(spacing));
         binding.adminDistrictResultRecyclerview.setLayoutManager(glm);
         binding.adminDistrictResultRecyclerview.setHasFixedSize(true);
         constituencyAdapter = new ConstituencyAdapter(new ConstituencyAdapter.ListItemClickListener() {
@@ -171,6 +179,7 @@ public class AdminResultFragment extends Fragment {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 baseRepository.publishResult(true);
+                createNotification("Election result published", "Voices heard, votes counted. The verdict is in!");
                 dialog.dismiss();
             }
         });
@@ -184,6 +193,21 @@ public class AdminResultFragment extends Fragment {
 
         builder.setCancelable(false);
         builder.show();
+    }
+
+    public void createNotification(String title, String message) {
+        FCMSender fcmSender = new FCMSender();
+        fcmSender.send(String.format(NotificationMessage.message, Constants.NOTIFICATION_TOPIC_ELECTION, title, message), new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+
+            }
+        });
     }
 
 }

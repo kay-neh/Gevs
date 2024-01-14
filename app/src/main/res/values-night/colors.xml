@@ -16,4 +16,7 @@
     <color name="green">#57d374</color>
     <color name="red">#e57373</color>
 
+    <color name="notification_background_blue">#c5cbfa</color>
+    <color name="notification_icon_blue">#0C4FEC</color>
+
 </resources>

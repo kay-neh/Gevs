@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData;
 import com.example.gevs.data.pojo.Candidate;
 import com.example.gevs.data.pojo.DistrictVote;
 import com.example.gevs.data.pojo.ElectionResult;
+import com.example.gevs.data.pojo.Notification;
+import com.example.gevs.data.pojo.PushNotification;
 import com.example.gevs.data.pojo.SeatCount;
 import com.example.gevs.data.pojo.Vote;
 import com.example.gevs.data.pojo.VoteCount;
@@ -132,6 +134,14 @@ public class BaseRepository {
 
     public LiveData<Boolean> isResultPublished() {
         return remoteDataSource.isResultPublished();
+    }
+
+    public void saveNotification(String userId, Notification notification) {
+        remoteDataSource.saveNotification(userId, notification);
+    }
+
+    public LiveData<List<Notification>> getNotificationsById(String userId) {
+        return remoteDataSource.getNotificationsById(userId);
     }
 
 }

@@ -6,10 +6,10 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NoteDecoration extends RecyclerView.ItemDecoration {
+public class CardDecoration extends RecyclerView.ItemDecoration {
     private int spaceInPixels;
 
-    public NoteDecoration(int spaceInPixels) {
+    public CardDecoration(int spaceInPixels) {
         this.spaceInPixels = spaceInPixels;
     }
 

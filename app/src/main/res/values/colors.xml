@@ -20,6 +20,9 @@
     <color name="cardViewBackgroundColor">@color/white</color>
     <color name="constrainBackgroundColor">#dedede</color>
 
+    <color name="notification_background_blue">#e8eafd</color>
+    <color name="notification_icon_blue">#0C4FEC</color>
+
 
     <!-- material 3 color -->
     <color name="seed">#0C4FEC</color>

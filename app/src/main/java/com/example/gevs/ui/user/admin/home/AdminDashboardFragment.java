@@ -3,6 +3,7 @@ package com.example.gevs.ui.user.admin.home;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
@@ -26,14 +27,21 @@ import com.example.gevs.data.pojo.VoteCount;
 import com.example.gevs.databinding.FragmentAdminDashboardBinding;
 import com.example.gevs.ui.user.adapters.VoteAdapter;
 import com.example.gevs.util.Constants;
+import com.example.gevs.util.FCMSender;
+import com.example.gevs.util.NotificationMessage;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class AdminDashboardFragment extends Fragment {
 
@@ -146,11 +154,27 @@ public class AdminDashboardFragment extends Fragment {
         builder.show();
     }
 
+    public void createNotification(String title, String message) {
+        FCMSender fcmSender = new FCMSender();
+        fcmSender.send(String.format(NotificationMessage.message, Constants.NOTIFICATION_TOPIC_ELECTION, title, message), new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+
+            }
+        });
+    }
+
     public void startElection() {
         baseRepository.clearVotes();
         createElectionData();
         createElectionResultData();
         baseRepository.publishResult(false);
+        createNotification("Election has started", "Sound the alarm, it's election time! ⏰ Make your voice heard and cast your vote!");
     }
 
     public void stopElection() {
@@ -169,6 +193,7 @@ public class AdminDashboardFragment extends Fragment {
                 }
             }
         });
+        createNotification("Election has ended", "The wait is almost over. Results will be available shortly. ⏱️");
     }
 
     public LiveData<List<DistrictPartyWinner>> computeWinner() {
