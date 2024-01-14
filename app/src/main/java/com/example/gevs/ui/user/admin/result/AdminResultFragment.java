@@ -179,7 +179,7 @@ public class AdminResultFragment extends Fragment {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 baseRepository.publishResult(true);
-                createNotification("Election result published", "Voices heard, votes counted. The verdict is in!");
+                createNotification("Election result finalized", "Voices heard, votes counted. The verdict is in!");
                 dialog.dismiss();
             }
         });

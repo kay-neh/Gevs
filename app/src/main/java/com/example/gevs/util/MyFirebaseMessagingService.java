@@ -12,10 +12,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
 
 import com.example.gevs.R;
 import com.example.gevs.data.BaseRepository;
 import com.example.gevs.data.pojo.Notification;
+import com.example.gevs.data.pojo.Voter;
 import com.example.gevs.ui.user.voter.VoterMainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessagingService;

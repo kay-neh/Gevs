@@ -175,19 +175,30 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/undraw_officer" />
+                app:srcCompat="@drawable/undraw_result" />
 
             <TextView
                 android:id="@+id/admin_voters_empty_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Results have not been published!"
+                tools:text="Polls haven't opened yet!"
                 android:textAppearance="?attr/textAppearanceHeadline6"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/admin_voters_empty_image"
                 app:layout_constraintStart_toStartOf="@+id/admin_voters_empty_image"
                 app:layout_constraintTop_toBottomOf="@+id/admin_voters_empty_image" />
+
+            <TextView
+                android:id="@+id/admin_voters_empty_extra_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textAppearance="?attr/textAppearanceBody2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/admin_voters_empty_text"
+                app:layout_constraintStart_toStartOf="@+id/admin_voters_empty_text"
+                app:layout_constraintTop_toBottomOf="@+id/admin_voters_empty_text"
+                tools:text="Stay tuned for election time" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

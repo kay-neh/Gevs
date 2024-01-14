@@ -61,7 +61,14 @@ public class VoterResultFragment extends Fragment {
                     } else {
                         binding.contentScrollView.setVisibility(View.GONE);
                         binding.resultEmptyState.setVisibility(View.VISIBLE);
+                        binding.adminVotersEmptyText.setText("Vote counting is in progress...");
+                        binding.adminVotersEmptyExtraText.setText("Results coming soon! ");
                     }
+                } else {
+                    binding.contentScrollView.setVisibility(View.GONE);
+                    binding.resultEmptyState.setVisibility(View.VISIBLE);
+                    binding.adminVotersEmptyText.setText("Polls haven't opened yet!");
+                    binding.adminVotersEmptyExtraText.setText("Stay tuned for election time ");
                 }
             }
         });

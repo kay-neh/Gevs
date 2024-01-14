@@ -6,7 +6,6 @@ import com.example.gevs.data.pojo.Candidate;
 import com.example.gevs.data.pojo.DistrictVote;
 import com.example.gevs.data.pojo.ElectionResult;
 import com.example.gevs.data.pojo.Notification;
-import com.example.gevs.data.pojo.PushNotification;
 import com.example.gevs.data.pojo.SeatCount;
 import com.example.gevs.data.pojo.Vote;
 import com.example.gevs.data.pojo.VoteCount;
@@ -75,5 +74,7 @@ public interface BaseDataSource {
     void saveNotification(String userId, Notification notification);
 
     LiveData<List<Notification>> getNotificationsById(String userId);
+
+    void clearAllNotifications(String userId);
 
 }

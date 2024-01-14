@@ -1,7 +1,5 @@
 package com.example.gevs.data.remote;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -11,14 +9,11 @@ import com.example.gevs.data.pojo.Candidate;
 import com.example.gevs.data.pojo.DistrictVote;
 import com.example.gevs.data.pojo.ElectionResult;
 import com.example.gevs.data.pojo.Notification;
-import com.example.gevs.data.pojo.PushNotification;
 import com.example.gevs.data.pojo.SeatCount;
 import com.example.gevs.data.pojo.Vote;
 import com.example.gevs.data.pojo.VoteCount;
 import com.example.gevs.data.pojo.Voter;
 import com.example.gevs.util.Constants;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -532,6 +527,11 @@ public class GevsRemoteDataSource implements BaseDataSource {
             }
         });
         return data;
+    }
+
+    @Override
+    public void clearAllNotifications(String userId) {
+        firebaseDatabase.getReference(Constants.KEY_NOTIFICATIONS + "/" + userId).setValue(null);
     }
 
 }

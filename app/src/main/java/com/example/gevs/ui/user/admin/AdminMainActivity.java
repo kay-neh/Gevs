@@ -39,6 +39,8 @@ public class AdminMainActivity extends AppCompatActivity {
     SharedPreferences preferences;
     int checkedItemPosition;
 
+    String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,10 @@ public class AdminMainActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null) {
+            userId = mAuth.getCurrentUser().getUid();
+        }
+
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -112,6 +118,7 @@ public class AdminMainActivity extends AppCompatActivity {
         builder.setMessage("You are about to sign out");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                baseRepository.clearAllNotifications(userId);
                 mAuth.signOut();
             }
         });

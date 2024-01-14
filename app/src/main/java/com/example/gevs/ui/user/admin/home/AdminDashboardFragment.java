@@ -105,6 +105,7 @@ public class AdminDashboardFragment extends Fragment {
                         binding.electionTimer.setVisibility(View.GONE);
                         binding.adminLiveUpdateRecyclerview.setVisibility(View.GONE);
                         binding.adminLiveUpdateEmptyState.setVisibility(View.VISIBLE);
+                        binding.adminVotersEmptyText.setText("No active Election!");
                     }
                 }
             }
