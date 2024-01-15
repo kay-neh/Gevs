@@ -74,19 +74,6 @@ public class CandidateAdapter extends BaseExpandableListAdapter {
         }
 
         TextView partyName = convertView.findViewById(R.id.admin_party_name);
-//        ImageView partyImage = convertView.findViewById(R.id.admin_party_imageView);
-
-
-//        if (listTitle.equals(Constants.PARTY_BLUE)) {
-//            partyImage.setImageResource(R.drawable.blue);
-//        } else if (listTitle.equals(Constants.PARTY_RED)) {
-//            partyImage.setImageResource(R.drawable.red);
-//        } else if (listTitle.equals(Constants.PARTY_YELLOW)) {
-//            partyImage.setImageResource(R.drawable.yellow);
-//        } else {
-//            partyImage.setImageResource(R.drawable.independent);
-//        }
-
         partyName.setText(listTitle);
 
         ExpandableListView eLV = (ExpandableListView) parent;

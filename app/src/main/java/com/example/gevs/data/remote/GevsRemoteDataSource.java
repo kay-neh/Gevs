@@ -534,4 +534,27 @@ public class GevsRemoteDataSource implements BaseDataSource {
         firebaseDatabase.getReference(Constants.KEY_NOTIFICATIONS + "/" + userId).setValue(null);
     }
 
+    @Override
+    public LiveData<Integer> getRegisteredVotersCount() {
+        DatabaseReference databaseReference = firebaseDatabase.getReference(Constants.KEY_UVC);
+        final MutableLiveData<Integer> data = new MutableLiveData<>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<Boolean> booleanList = new ArrayList<>();
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                    Boolean aBoolean = dataSnapshot1.getValue(Boolean.class);
+                    booleanList.add(aBoolean);
+                }
+                data.setValue(booleanList.size());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return data;
+    }
+
 }

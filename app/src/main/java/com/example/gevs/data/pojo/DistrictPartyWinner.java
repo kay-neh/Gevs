@@ -2,15 +2,16 @@ package com.example.gevs.data.pojo;
 
 public class DistrictPartyWinner {
 
-    private String constituency, party, name;
+    private String constituency, party, name, photo;
 
     public DistrictPartyWinner() {
     }
 
-    public DistrictPartyWinner(String constituency, String party, String name) {
+    public DistrictPartyWinner(String constituency, String party, String name, String photo) {
         this.constituency = constituency;
         this.party = party;
         this.name = name;
+        this.photo = photo;
     }
 
     public String getConstituency() {
@@ -35,5 +36,13 @@ public class DistrictPartyWinner {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

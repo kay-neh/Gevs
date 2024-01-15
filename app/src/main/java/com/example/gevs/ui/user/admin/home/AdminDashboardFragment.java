@@ -207,8 +207,14 @@ public class AdminDashboardFragment extends Fragment {
                 public void onChanged(VoteCount voteCount) {
                     if (voteCount != null) {
                         if (voteCount.getVote() > 0) {
-                            districtPartyWinners.add(new DistrictPartyWinner(s, voteCount.getParty(), voteCount.getName()));
-                            data.setValue(districtPartyWinners);
+                            baseRepository.getCandidateById(voteCount.getName()).observe(getViewLifecycleOwner(), new Observer<Candidate>() {
+                                @Override
+                                public void onChanged(Candidate candidate) {
+                                    districtPartyWinners.add(new DistrictPartyWinner(s, voteCount.getParty(), voteCount.getName(), candidate.getPhoto()));
+                                    data.setValue(districtPartyWinners);
+                                }
+                            });
+
                         }
                     }
                 }
