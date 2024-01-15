@@ -84,12 +84,14 @@ public class VoterVoteFragment extends Fragment {
                     }
                     if (s.equals(Constants.ELECTION_STATUS_COMPLETED)) {
                         binding.votersEmptyState.setVisibility(View.VISIBLE);
-                        binding.adminVotersEmptyText.setText("Election has Ended!");
+                        binding.adminVotersEmptyText.setText("Ballots boxed, decisions made!");
+                        binding.adminVotersEmptyExtraText.setText("Thank you for voting");
                         binding.voterVoteCandidatesRecyclerview.setVisibility(View.GONE);
                     }
                 } else {
                     binding.votersEmptyState.setVisibility(View.VISIBLE);
-                    binding.adminVotersEmptyText.setText("Election has not started!");
+                    binding.adminVotersEmptyText.setText("Polls haven't opened yet!");
+                    binding.adminVotersEmptyExtraText.setText("Stay tuned for election time");
                     binding.voterVoteCandidatesRecyclerview.setVisibility(View.GONE);
                 }
             }

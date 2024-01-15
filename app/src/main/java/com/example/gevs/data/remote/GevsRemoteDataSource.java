@@ -1,7 +1,5 @@
 package com.example.gevs.data.remote;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,13 +8,12 @@ import com.example.gevs.data.BaseDataSource;
 import com.example.gevs.data.pojo.Candidate;
 import com.example.gevs.data.pojo.DistrictVote;
 import com.example.gevs.data.pojo.ElectionResult;
+import com.example.gevs.data.pojo.Notification;
 import com.example.gevs.data.pojo.SeatCount;
 import com.example.gevs.data.pojo.Vote;
 import com.example.gevs.data.pojo.VoteCount;
 import com.example.gevs.data.pojo.Voter;
 import com.example.gevs.util.Constants;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -503,6 +500,38 @@ public class GevsRemoteDataSource implements BaseDataSource {
             }
         });
         return data;
+    }
+
+    @Override
+    public void saveNotification(String userId, Notification notification) {
+        firebaseDatabase.getReference(Constants.KEY_NOTIFICATIONS + "/" + userId + "/" + notification.getNotificationTime()).setValue(notification);
+    }
+
+    @Override
+    public LiveData<List<Notification>> getNotificationsById(String userId) {
+        DatabaseReference databaseReference = firebaseDatabase.getReference(Constants.KEY_NOTIFICATIONS + "/" + userId);
+        final MutableLiveData<List<Notification>> data = new MutableLiveData<>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Notification> notificationList = new ArrayList<>();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Notification notification = dataSnapshot1.getValue(Notification.class);
+                    notificationList.add(notification);
+                }
+                data.setValue(notificationList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+        return data;
+    }
+
+    @Override
+    public void clearAllNotifications(String userId) {
+        firebaseDatabase.getReference(Constants.KEY_NOTIFICATIONS + "/" + userId).setValue(null);
     }
 
 }

@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <color name="colorPrimary">#0C4FEC</color>
+    <color name="colorSecondary">#0C4FEC</color>
+
+    <color name="textColor">#dedede</color>
+    <color name="verify">#00E676</color>
+    <color name="unverify">#FF6E40</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="grey">#424242</color>
+    <color name="orange">#FF5722</color>
+
+    <color name="green">#57d374</color>
+    <color name="red">#e57373</color>
+
+    <color name="notification_background_blue">#c5cbfa</color>
+    <color name="notification_icon_blue">#0C4FEC</color>
+
+    <color name="voted_text_blue">#9da9f7</color>
+
+</resources>

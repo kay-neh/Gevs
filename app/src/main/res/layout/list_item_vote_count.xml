@@ -9,6 +9,11 @@
         android:id="@+id/manage_election_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +32,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 app:boxBackgroundColor="?attr/colorSurface"
-                app:cardCornerRadius="64dp"
+                app:cardCornerRadius="40dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -48,6 +53,7 @@
                 android:layout_marginBottom="5dp"
                 android:text="John Smith"
                 android:textAppearance="?attr/textAppearanceBody1"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/candidate_party"
                 app:layout_constraintStart_toEndOf="@+id/admin_candidate_imageCardView"
                 app:layout_constraintTop_toTopOf="@+id/admin_candidate_imageCardView" />
@@ -58,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:text="Red Party"
                 android:textAppearance="?attr/textAppearanceBody2"
+                android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="@+id/admin_candidate_imageCardView"
                 app:layout_constraintStart_toStartOf="@+id/candidate_name"
                 app:layout_constraintTop_toBottomOf="@+id/candidate_name" />
@@ -69,6 +76,7 @@
                 android:layout_marginEnd="4dp"
                 android:text="6"
                 android:textAppearance="?attr/textAppearanceBody1"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/candidate_party"
                 app:layout_constraintEnd_toStartOf="@+id/votes_textview"
                 app:layout_constraintTop_toTopOf="@+id/candidate_name" />
@@ -80,6 +88,7 @@
                 android:layout_marginEnd="16dp"
                 android:text="Votes"
                 android:textAppearance="?attr/textAppearanceBody1"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/vote_count"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/vote_count" />

@@ -1,11 +1,16 @@
 package com.example.gevs.ui.splashscreen;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
 
+import android.app.UiModeManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 
 import com.example.gevs.R;
 import com.example.gevs.data.BaseRepository;
@@ -23,10 +28,18 @@ public class SplashscreenActivity extends AppCompatActivity {
     FirebaseAuth.AuthStateListener authListener;
     FirebaseUser firebaseUser;
 
+    int themeMode;
+    SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
+
+        // get defPreference and themeMode
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        themeMode = preferences.getInt("ThemeMode", AppCompatDelegate.MODE_NIGHT_NO);
+        applyThemeMode(themeMode);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -36,11 +49,6 @@ public class SplashscreenActivity extends AppCompatActivity {
             public void run() {
                 //Logic for switching between group of users
                 if (firebaseUser != null) {
-//                    // testing
-//                    Intent i = new Intent(SplashscreenActivity.this, AdminMainActivity.class);
-//                    i.putExtra(Constants.KEY_SESSION_TYPE, Constants.SESSION_TYPE_DATA_MANAGER);
-//                    startActivity(i);
-//                    finish();
                     //determine user category first
                     BaseRepository baseRepository = new BaseRepository();
                     baseRepository.getVoter(firebaseUser.getUid()).observe(SplashscreenActivity.this, new Observer<Voter>() {
@@ -65,6 +73,15 @@ public class SplashscreenActivity extends AppCompatActivity {
                 }
             }
         }, 3000);
+    }
+
+    protected void applyThemeMode(int themeMode) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            UiModeManager manager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
+            manager.setApplicationNightMode(themeMode);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(themeMode);
+        }
     }
 
 }
