@@ -79,4 +79,8 @@ dependencies {
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.1"))
     implementation("com.squareup.okhttp3:okhttp")
 
+    // scanner implementation
+    implementation ("com.google.android.gms:play-services-vision:20.1.3")
+
+
 }
