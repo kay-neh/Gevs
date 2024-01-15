@@ -5,31 +5,38 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 
 import com.example.gevs.R;
 import com.example.gevs.data.BaseRepository;
+import com.example.gevs.data.pojo.Candidate;
 import com.example.gevs.data.pojo.DistrictVote;
+import com.example.gevs.data.pojo.DistrictVoteCount;
 import com.example.gevs.data.pojo.ElectionResult;
+import com.example.gevs.data.pojo.VoteCount;
 import com.example.gevs.databinding.FragmentVoterResultBinding;
-import com.example.gevs.ui.user.adapters.ConstituencyAdapter;
+import com.example.gevs.ui.user.adapters.VoteCountAdapter;
 import com.example.gevs.ui.user.voter.result.analytics.VoterAnalyticsActivity;
-import com.example.gevs.ui.user.voter.result.resultdetails.VoterResultDetailsActivity;
 import com.example.gevs.util.Constants;
-import com.example.gevs.util.CardDecoration;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class VoterResultFragment extends Fragment {
 
     FragmentVoterResultBinding binding;
-    ConstituencyAdapter constituencyAdapter;
     BaseRepository baseRepository;
+    List<String> expandableListTitle;
+    HashMap<String, List<DistrictVoteCount>> expandableListDetail;
+    VoteCountAdapter voteCountAdapter;
 
     public VoterResultFragment() {
         // Required empty public constructor
@@ -42,12 +49,19 @@ public class VoterResultFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_voter_result, container, false);
 
         baseRepository = new BaseRepository();
-        initAdapter();
 
         binding.analyticsTextview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), VoterAnalyticsActivity.class));
+            }
+        });
+
+        binding.expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v,
+                                        int groupPosition, long id) {
+                return true; // This way the expander cannot be collapsed
             }
         });
 
@@ -73,11 +87,20 @@ public class VoterResultFragment extends Fragment {
             }
         });
 
+        // HERE
         baseRepository.getDistrictVotes().observe(getViewLifecycleOwner(), new Observer<List<DistrictVote>>() {
             @Override
             public void onChanged(List<DistrictVote> districtVotes) {
                 if (districtVotes != null) {
-                    constituencyAdapter.setList(districtVotes);
+                    createHashmap(districtVotes).observe(getViewLifecycleOwner(), new Observer<HashMap<String, List<DistrictVoteCount>>>() {
+                        @Override
+                        public void onChanged(HashMap<String, List<DistrictVoteCount>> stringListHashMap) {
+                            expandableListDetail = stringListHashMap;
+                            expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
+                            voteCountAdapter = new VoteCountAdapter(getContext(), expandableListTitle, expandableListDetail);
+                            binding.expandableListView.setAdapter(voteCountAdapter);
+                        }
+                    });
                 }
             }
         });
@@ -123,24 +146,42 @@ public class VoterResultFragment extends Fragment {
         return binding.getRoot();
     }
 
-    public void initAdapter() {
-        GridLayoutManager glm = new GridLayoutManager(getContext(), 2);
-        int spacing = 16;
-        binding.adminDistrictResultRecyclerview.setPadding(spacing, spacing, spacing, spacing);
-        binding.adminDistrictResultRecyclerview.setClipToPadding(false);
-        binding.adminDistrictResultRecyclerview.setClipChildren(false);
-        binding.adminDistrictResultRecyclerview.addItemDecoration(new CardDecoration(spacing));
-        binding.adminDistrictResultRecyclerview.setLayoutManager(glm);
-        binding.adminDistrictResultRecyclerview.setHasFixedSize(true);
-        constituencyAdapter = new ConstituencyAdapter(new ConstituencyAdapter.ListItemClickListener() {
-            @Override
-            public void onListItemClick(String key) {
-                Intent i = new Intent(getContext(), VoterResultDetailsActivity.class);
-                i.putExtra("Constituency", key);
-                startActivity(i);
+    public LiveData<HashMap<String, List<DistrictVoteCount>>> createHashmap(List<DistrictVote> masterList) {
+        final MutableLiveData<HashMap<String, List<DistrictVoteCount>>> data = new MutableLiveData<>();
+        HashMap<String, List<DistrictVoteCount>> expandableListDetail = new HashMap<>();
+
+        for (DistrictVote d : masterList) {
+            baseRepository.getCandidatesByConstituency(d.getConstituency()).observe(getViewLifecycleOwner(), new Observer<List<Candidate>>() {
+                @Override
+                public void onChanged(List<Candidate> candidateList) {
+                    expandableListDetail.put(d.getConstituency(), getDistrictVoteCountList(convertHashmapToList(d.getResult()), candidateList));
+                    data.setValue(expandableListDetail);
+                }
+            });
+        }
+
+        return data;
+    }
+
+    public List<VoteCount> convertHashmapToList(HashMap<String, VoteCount> voteCountHashMap) {
+        if (voteCountHashMap != null) {
+            return new ArrayList<>(voteCountHashMap.values());
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public List<DistrictVoteCount> getDistrictVoteCountList(List<VoteCount> voteCountList, List<Candidate> sortedCandidateList) {
+        List<DistrictVoteCount> districtVoteCountList = new ArrayList<>();
+        for (VoteCount v : voteCountList) {
+            for (Candidate c : sortedCandidateList) {
+                if (v.getName().equals(c.getName())) {
+                    // create new list with photos
+                    districtVoteCountList.add(new DistrictVoteCount(v.getName(), v.getParty(), c.getPhoto(), v.getVote()));
+                }
             }
-        });
-        binding.adminDistrictResultRecyclerview.setAdapter(constituencyAdapter);
+        }
+        return districtVoteCountList;
     }
 
 }

@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 
 import com.example.gevs.R;
@@ -38,7 +39,6 @@ public class VoterSettingsFragment extends Fragment {
 
     int themeMode;
     SharedPreferences preferences;
-    int checkedItemPosition;
 
     public VoterSettingsFragment() {
         // Required empty public constructor
@@ -71,10 +71,10 @@ public class VoterSettingsFragment extends Fragment {
             });
         }
 
-        binding.darkmodeText.setOnClickListener(new View.OnClickListener() {
+        binding.nightModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                showThemeSelectionDialog();
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                setTheme(isChecked);
             }
         });
 
@@ -128,40 +128,17 @@ public class VoterSettingsFragment extends Fragment {
         builder.show();
     }
 
-    public void showThemeSelectionDialog() {
-        MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getContext())
-                .setTitle("Choose Theme")
-                .setSingleChoiceItems(R.array.theme_mode, getCheckedItemPosition(), null)
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                })
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+    public void setTheme(Boolean isChecked) {
+        if (isChecked) {
+            themeMode = AppCompatDelegate.MODE_NIGHT_YES;
+        } else {
+            themeMode = AppCompatDelegate.MODE_NIGHT_NO;
+        }
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("ThemeMode", themeMode);
+        editor.apply();
 
-                        ListView lw = ((androidx.appcompat.app.AlertDialog) dialogInterface).getListView();
-                        int checkedItem = lw.getCheckedItemPosition();
-
-                        switch (checkedItem) {
-                            case 0:
-                                themeMode = AppCompatDelegate.MODE_NIGHT_YES;
-                                break;
-                            case 1:
-                                themeMode = AppCompatDelegate.MODE_NIGHT_NO;
-                        }
-
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putInt("ThemeMode", themeMode);
-                        editor.apply();
-
-                        applyThemeMode(themeMode);
-                    }
-                });
-
-        materialAlertDialogBuilder.create().show();
+        applyThemeMode(themeMode);
     }
 
     protected void applyThemeMode(int themeMode) {
@@ -173,22 +150,14 @@ public class VoterSettingsFragment extends Fragment {
         }
     }
 
-    protected int getCheckedItemPosition() {
-        if (themeMode == AppCompatDelegate.MODE_NIGHT_YES) {
-            checkedItemPosition = 0;
-        } else if (themeMode == AppCompatDelegate.MODE_NIGHT_NO) {
-            checkedItemPosition = 1;
-        }
-        return checkedItemPosition;
-    }
-
     protected void setDarkModeSummary(int themeMode) {
         if (themeMode == AppCompatDelegate.MODE_NIGHT_YES) {
             binding.darkmodeSummary.setText("On");
+            binding.nightModeSwitch.setChecked(true);
         } else if (themeMode == AppCompatDelegate.MODE_NIGHT_NO) {
             binding.darkmodeSummary.setText("Off");
+            binding.nightModeSwitch.setChecked(false);
         }
     }
-
 
 }

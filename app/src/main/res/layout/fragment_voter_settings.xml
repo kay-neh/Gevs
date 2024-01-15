@@ -94,6 +94,15 @@
             app:layout_constraintStart_toStartOf="@+id/darkmode_text"
             app:layout_constraintTop_toBottomOf="@+id/darkmode_text" />
 
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/night_mode_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/darkmode_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/darkmode_img" />
+
         <ImageView
             android:id="@+id/about_img"
             android:layout_width="wrap_content"

@@ -19,4 +19,6 @@
     <color name="notification_background_blue">#c5cbfa</color>
     <color name="notification_icon_blue">#0C4FEC</color>
 
+    <color name="voted_text_blue">#9da9f7</color>
+
 </resources>
