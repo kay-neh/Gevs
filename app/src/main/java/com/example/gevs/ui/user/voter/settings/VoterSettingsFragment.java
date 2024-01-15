@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -26,8 +27,12 @@ import com.example.gevs.data.pojo.Candidate;
 import com.example.gevs.data.pojo.Voter;
 import com.example.gevs.databinding.FragmentVoterSettingsBinding;
 import com.example.gevs.ui.user.admin.AdminMainActivity;
+import com.example.gevs.util.Constants;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.List;
 
@@ -39,6 +44,7 @@ public class VoterSettingsFragment extends Fragment {
 
     int themeMode;
     SharedPreferences preferences;
+    String userId;
 
     public VoterSettingsFragment() {
         // Required empty public constructor
@@ -60,7 +66,8 @@ public class VoterSettingsFragment extends Fragment {
         baseRepository = new BaseRepository();
 
         if (mAuth.getCurrentUser() != null) {
-            baseRepository.getVoter(mAuth.getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<Voter>() {
+            userId = mAuth.getCurrentUser().getUid();
+            baseRepository.getVoter(userId).observe(getViewLifecycleOwner(), new Observer<Voter>() {
                 @Override
                 public void onChanged(Voter voter) {
                     if (voter != null) {
@@ -102,6 +109,8 @@ public class VoterSettingsFragment extends Fragment {
         builder.setMessage("You are about to sign out");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                unsubscribeTopic();
+                baseRepository.clearAllNotifications(userId);
                 mAuth.signOut();
             }
         });
@@ -158,6 +167,20 @@ public class VoterSettingsFragment extends Fragment {
             binding.darkmodeSummary.setText("Off");
             binding.nightModeSwitch.setChecked(false);
         }
+    }
+
+    private void unsubscribeTopic() {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.NOTIFICATION_TOPIC_ELECTION)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Unsubscribed";
+                        if (!task.isSuccessful()) {
+                            msg = "Unsubscribe failed";
+                        }
+                        //Toast.makeText(VoterMainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 }

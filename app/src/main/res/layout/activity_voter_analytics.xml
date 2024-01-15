@@ -72,13 +72,104 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView16"
                     tools:itemCount="6"
-                    tools:listitem="@layout/list_item_district_winners" />
+                    tools:listitem="@layout/list_item_child_candidates" />
+
+                <TextView
+                    android:id="@+id/admin_analytics_additional_info_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Additional Information"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/analytics_recyclerview" />
+
+                <TextView
+                    android:id="@+id/admin_analytics_registeredVoters_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Registered Voters:"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/admin_analytics_additional_info_textView" />
+
+
+                <TextView
+                    android:id="@+id/value_registeredVoters_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="50"
+                    app:layout_constraintBottom_toBottomOf="@+id/admin_analytics_registeredVoters_textView"
+                    app:layout_constraintStart_toEndOf="@+id/admin_analytics_registeredVoters_textView"
+                    app:layout_constraintTop_toTopOf="@+id/admin_analytics_registeredVoters_textView" />
+
+                <TextView
+                    android:id="@+id/admin_analytics_verifiedVoters_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Verified Voters:"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/admin_analytics_registeredVoters_textView" />
+
+                <TextView
+                    android:id="@+id/value_verifiedVoters_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="48"
+                    app:layout_constraintBottom_toBottomOf="@+id/admin_analytics_verifiedVoters_textView"
+                    app:layout_constraintStart_toStartOf="@+id/value_registeredVoters_textView"
+                    app:layout_constraintTop_toTopOf="@+id/admin_analytics_verifiedVoters_textView" />
+
+                <TextView
+                    android:id="@+id/admin_analytics_activeVoters_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Active voters:"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/admin_analytics_verifiedVoters_textView" />
+
+
+                <TextView
+                    android:id="@+id/value_activeVoters_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="40"
+                    app:layout_constraintBottom_toBottomOf="@+id/admin_analytics_activeVoters_textView"
+                    app:layout_constraintStart_toStartOf="@+id/value_verifiedVoters_textView"
+                    app:layout_constraintTop_toTopOf="@+id/admin_analytics_activeVoters_textView" />
+
+                <TextView
+                    android:id="@+id/admin_analytics_duration_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="64dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/admin_analytics_activeVoters_textView"
+                    tools:text="Election duration" />
+
+                <TextView
+                    android:id="@+id/value_duration_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/admin_analytics_duration_textView"
+                    app:layout_constraintStart_toStartOf="@+id/value_activeVoters_textView"
+                    app:layout_constraintTop_toTopOf="@+id/admin_analytics_duration_textView"
+                    tools:text="180 mins" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

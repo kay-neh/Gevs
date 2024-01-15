@@ -77,4 +77,6 @@ public interface BaseDataSource {
 
     void clearAllNotifications(String userId);
 
+    LiveData<Integer> getRegisteredVotersCount();
+
 }
