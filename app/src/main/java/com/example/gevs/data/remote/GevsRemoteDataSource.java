@@ -413,7 +413,7 @@ public class GevsRemoteDataSource implements BaseDataSource {
     public LiveData<VoteCount> getConstituencyHighestPartyVote(String constituency) {
         DatabaseReference databaseReference = firebaseDatabase.getReference(Constants.KEY_CONSTITUENCY + "/" + constituency + "/result");
         final MutableLiveData<VoteCount> data = new MutableLiveData<>();
-        databaseReference.orderByChild("vote").limitToLast(2).addValueEventListener(new ValueEventListener() {
+        databaseReference.orderByChild("vote").limitToLast(2).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<VoteCount> voteCountList = new ArrayList<>();
@@ -433,8 +433,6 @@ public class GevsRemoteDataSource implements BaseDataSource {
                         } else {
                             data.setValue(voteCountList.get(1));
                         }
-                    } else {
-                        data.setValue(new VoteCount("", "", 0L));
                     }
 
                 }
