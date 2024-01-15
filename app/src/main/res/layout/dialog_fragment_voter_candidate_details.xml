@@ -46,15 +46,18 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/dialog_candidate_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="4dp"
                 android:text="Nanami Kento"
                 android:textAppearance="?attr/textAppearanceBody1"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/dialog_candidate_titles"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/dialog_candidate_imageCardView"
                 app:layout_constraintTop_toTopOf="@+id/dialog_candidate_imageCardView"
                 app:layout_constraintVertical_chainStyle="packed" />
@@ -162,12 +165,14 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/constituency_material_textView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Shangri-La"
+                android:layout_marginEnd="16dp"
+                android:text="Northern-Kunlun-Mountain"
                 android:textAppearance="?attr/textAppearanceBody1"
-                app:layout_constraintBottom_toBottomOf="@+id/materialTextView5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/materialTextView5"
                 app:layout_constraintTop_toTopOf="@+id/materialTextView5" />
 

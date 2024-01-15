@@ -117,6 +117,9 @@ public class VoterDashboardFragment extends Fragment {
         MaterialTextView candidateName = dialogView.findViewById(R.id.dialog_candidate_name);
         MaterialTextView candidateParty = dialogView.findViewById(R.id.party_material_textView);
         MaterialTextView candidateConstituency = dialogView.findViewById(R.id.constituency_material_textView);
+        MaterialTextView candidateAge = dialogView.findViewById(R.id.age_material_textView);
+        MaterialTextView candidateDateOfBirth = dialogView.findViewById(R.id.dob_material_textView);
+        MaterialTextView candidateManifesto = dialogView.findViewById(R.id.manifesto_material_textView);
 
         baseRepository.getCandidateById(candidateId).observe(getViewLifecycleOwner(), new Observer<Candidate>() {
             @Override
@@ -125,6 +128,9 @@ public class VoterDashboardFragment extends Fragment {
                     candidateName.setText(candidate.getName());
                     candidateParty.setText(candidate.getParty());
                     candidateConstituency.setText(candidate.getConstituency());
+                    candidateAge.setText(candidate.getAge());
+                    candidateDateOfBirth.setText(candidate.getDateOfBirth());
+                    candidateManifesto.setText(candidate.getManifesto());
                     Glide.with(getActivity().getApplicationContext()).load(candidate.getPhoto()).into(candidateImage);
                 }
             }
