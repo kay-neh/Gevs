@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,6 +107,17 @@ public class AdminDashboardFragment extends Fragment {
                         binding.adminLiveUpdateRecyclerview.setVisibility(View.GONE);
                         binding.adminLiveUpdateEmptyState.setVisibility(View.VISIBLE);
                         binding.adminVotersEmptyText.setText("No active Election!");
+                        baseRepository.getElectionResult().observe(getViewLifecycleOwner(), new Observer<ElectionResult>() {
+                            @Override
+                            public void onChanged(ElectionResult electionResult) {
+                                if (electionResult != null) {
+                                    if (electionResult.getWinner().equals(Constants.ELECTION_STATUS_PENDING)) {
+                                        baseRepository.updateWinner(Constants.HUNG_PARLIAMENT);
+                                    }
+                                }
+                            }
+                        });
+
                     }
                 }
             }
@@ -255,9 +267,12 @@ public class AdminDashboardFragment extends Fragment {
 
     public String declareWinner(List<SeatCount> seats) {
         String winner = Constants.HUNG_PARLIAMENT;
-        for (SeatCount s : seats) {
-            if (s.getSeat() >= 3) {
-                winner = s.getParty();
+        Log.e("Final size of seat", String.valueOf(seats.size()));
+        if (seats.size() != 0) {
+            for (SeatCount s : seats) {
+                if (s.getSeat() >= 3) {
+                    winner = s.getParty();
+                }
             }
         }
         return winner;
