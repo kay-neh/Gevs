@@ -1,5 +1,6 @@
 package com.example.gevs.ui.user.admin.result;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -22,6 +23,7 @@ import com.example.gevs.ui.user.admin.result.analytics.AdminAnalyticsActivity;
 import com.example.gevs.ui.user.admin.result.resultdetails.AdminResultDetailsActivity;
 import com.example.gevs.util.Constants;
 import com.example.gevs.util.NoteDecoration;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
 
@@ -51,6 +53,21 @@ public class AdminResultFragment extends Fragment {
             }
         });
 
+        binding.analyticsImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), AdminAnalyticsActivity.class));
+            }
+        });
+
+        binding.publishElectionResultBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPublishDialog();
+            }
+        });
+
+
         baseRepository.getDistrictVotes().observe(getViewLifecycleOwner(), new Observer<List<DistrictVote>>() {
             @Override
             public void onChanged(List<DistrictVote> districtVotes) {
@@ -66,9 +83,21 @@ public class AdminResultFragment extends Fragment {
                 if (s != null) {
                     if (s.equals(Constants.ELECTION_STATUS_PENDING)) {
                         binding.electionResultCard.setVisibility(View.GONE);
+                        binding.publishElectionResultBtn.setVisibility(View.GONE);
                     }
                     if (s.equals(Constants.ELECTION_STATUS_COMPLETED)) {
                         binding.electionResultCard.setVisibility(View.VISIBLE);
+                        binding.publishElectionResultBtn.setVisibility(View.VISIBLE);
+                        baseRepository.isResultPublished().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+                            @Override
+                            public void onChanged(Boolean aBoolean) {
+                                if (aBoolean != null) {
+                                    if (aBoolean) {
+                                        binding.publishElectionResultBtn.setVisibility(View.GONE);
+                                    }
+                                }
+                            }
+                        });
                     }
                 }
             }
@@ -133,6 +162,28 @@ public class AdminResultFragment extends Fragment {
             }
         });
         binding.adminDistrictResultRecyclerview.setAdapter(constituencyAdapter);
+    }
+
+    public void showPublishDialog() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
+        builder.setTitle("Publish Result?");
+        builder.setMessage("You are about to publish the election results!");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                baseRepository.publishResult(true);
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setCancelable(false);
+        builder.show();
     }
 
 }

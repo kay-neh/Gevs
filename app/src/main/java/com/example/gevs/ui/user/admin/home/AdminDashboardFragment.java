@@ -83,7 +83,7 @@ public class AdminDashboardFragment extends Fragment {
             public void onChanged(String s) {
                 if (s != null) {
                     if (s.equals(Constants.ELECTION_STATUS_PENDING)) {
-                        binding.startElectionFab.setVisibility(View.GONE);
+                        binding.startElectionFab.setVisibility(View.INVISIBLE);
                         binding.stopElectionFab.setVisibility(View.VISIBLE);
                         binding.electionStateTextview.setText("Ongoing");
                         binding.electionTimer.setVisibility(View.VISIBLE);
@@ -92,7 +92,7 @@ public class AdminDashboardFragment extends Fragment {
                     }
                     if (s.equals(Constants.ELECTION_STATUS_COMPLETED)) {
                         binding.startElectionFab.setVisibility(View.VISIBLE);
-                        binding.stopElectionFab.setVisibility(View.GONE);
+                        binding.stopElectionFab.setVisibility(View.INVISIBLE);
                         binding.electionStateTextview.setText("Starts soon");
                         binding.electionTimer.setVisibility(View.GONE);
                         binding.adminLiveUpdateRecyclerview.setVisibility(View.GONE);
