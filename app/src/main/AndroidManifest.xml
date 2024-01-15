@@ -30,6 +30,10 @@
         <activity
             android:name=".ui.auth.registervoter.VoterRegisterTwoActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.auth.registervoter.ScannerActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.auth.registervoter.VoterRegisterOneActivity"
             android:exported="false" />
@@ -58,5 +62,15 @@
             </intent-filter>
         </activity>
     </application>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
 </manifest>

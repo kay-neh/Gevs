@@ -73,4 +73,8 @@ dependencies {
     // Add the dependency for the Cloud Storage library
     implementation("com.google.firebase:firebase-storage")
 
+    // scanner implementation
+    implementation ("com.google.android.gms:play-services-vision:20.1.3")
+
+
 }
