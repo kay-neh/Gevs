@@ -107,16 +107,16 @@ public class AdminDashboardFragment extends Fragment {
                         binding.adminLiveUpdateRecyclerview.setVisibility(View.GONE);
                         binding.adminLiveUpdateEmptyState.setVisibility(View.VISIBLE);
                         binding.adminVotersEmptyText.setText("No active Election!");
-                        baseRepository.getElectionResult().observe(getViewLifecycleOwner(), new Observer<ElectionResult>() {
-                            @Override
-                            public void onChanged(ElectionResult electionResult) {
-                                if (electionResult != null) {
-                                    if (electionResult.getWinner().equals(Constants.ELECTION_STATUS_PENDING)) {
-                                        baseRepository.updateWinner(Constants.HUNG_PARLIAMENT);
-                                    }
-                                }
-                            }
-                        });
+//                        baseRepository.getElectionResult().observe(getViewLifecycleOwner(), new Observer<ElectionResult>() {
+//                            @Override
+//                            public void onChanged(ElectionResult electionResult) {
+//                                if (electionResult != null) {
+//                                    if (electionResult.getWinner().equals(Constants.ELECTION_STATUS_PENDING)) {
+//                                        baseRepository.updateWinner(Constants.HUNG_PARLIAMENT);
+//                                    }
+//                                }
+//                            }
+//                        });
 
                     }
                 }
