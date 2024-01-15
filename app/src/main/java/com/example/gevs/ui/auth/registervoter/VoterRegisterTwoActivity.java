@@ -1,6 +1,7 @@
 package com.example.gevs.ui.auth.registervoter;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -31,6 +32,8 @@ public class VoterRegisterTwoActivity extends AppCompatActivity {
     String fullName, constituency;
     Long dateOfBirth;
     private FirebaseAuth mAuth;
+    final int capturedRes = 1001;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,8 @@ public class VoterRegisterTwoActivity extends AppCompatActivity {
     }
 
     public void scanQrCode() {
+        startActivityForResult(new Intent(VoterRegisterTwoActivity.this, ScannerActivity.class), capturedRes);
+
 
     }
 
@@ -152,6 +157,17 @@ public class VoterRegisterTwoActivity extends AppCompatActivity {
             binding.loadingIndiator.setVisibility(View.VISIBLE);
         } else {
             binding.loadingIndiator.setVisibility(View.GONE);
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1001){
+            if(resultCode == capturedRes){
+                binding.registerUvcEditText.setText(data.getStringExtra("QRCode"));
+            }
         }
     }
 
