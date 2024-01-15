@@ -23,4 +23,5 @@
     <string name="cancel">Cancel</string>
     <string name="default_notification_channel_id">fcm_default_channel</string>
     <string name="default_notification_channel_name" translatable="true">Election</string>
+    <string name="about_app">GEVS (General Election Voting System) is an innovative native Android app developed for CO7102 Coursework 2, strategically crafted to address historical election issues in Shangri-La. Offering secure online voting, live tracking, post notifications, dark mode, analytics, and more, it stands as a robust solution for a transparent, inclusive, and technologically advanced democratic future.</string>
 </resources>
