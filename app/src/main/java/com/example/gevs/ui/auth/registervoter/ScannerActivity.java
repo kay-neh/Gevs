@@ -1,19 +1,23 @@
 package com.example.gevs.ui.auth.registervoter;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.databinding.DataBindingUtil;
 
 import com.example.gevs.R;
+import com.example.gevs.databinding.ActivityScannerBinding;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -23,28 +27,27 @@ import java.io.IOException;
 
 public class ScannerActivity extends AppCompatActivity {
 
-    SurfaceView cameraView;
-    TextView scanQR;
+    ActivityScannerBinding binding;
     private BarcodeDetector barcodeDetector;
     private CameraSource camSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     String intentData = "";
     String s;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scanner);
-        cameraView = findViewById(R.id.activity_main_sv_camera_view);
-        scanQR = findViewById(R.id.textView);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_scanner);
+
+        binding.imageView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         s = "Scanning.";
         initialiseDetectorsAndSources();
-
-
-
     }
 
     private void initialiseDetectorsAndSources() {
@@ -57,12 +60,12 @@ public class ScannerActivity extends AppCompatActivity {
                 .setAutoFocusEnabled(true)
                 .build();
 
-        cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
+        binding.activityMainSvCameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
                 try {
-                    if(ActivityCompat.checkSelfPermission(ScannerActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                        camSource.start(cameraView.getHolder());
+                    if (ActivityCompat.checkSelfPermission(ScannerActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                        camSource.start(binding.activityMainSvCameraView.getHolder());
                     } else {
                         ActivityCompat.requestPermissions(ScannerActivity.this, new
                                 String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
@@ -98,9 +101,6 @@ public class ScannerActivity extends AppCompatActivity {
                         setResult(1001, new Intent().putExtra("QRCode", intentData));
                         finish();
 
-
-
-
                     }
             }
         });
@@ -117,10 +117,24 @@ public class ScannerActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         initialiseDetectorsAndSources();
-
-
     }
 
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // Check if camera permissions are granted and if so start scanning code
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.length >= 1 && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                // permission granted
+                try {
+                    camSource.start(binding.activityMainSvCameraView.getHolder());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
 
 
 }
