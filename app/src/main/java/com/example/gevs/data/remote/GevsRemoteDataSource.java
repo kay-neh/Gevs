@@ -433,6 +433,8 @@ public class GevsRemoteDataSource implements BaseDataSource {
                         } else {
                             data.setValue(voteCountList.get(1));
                         }
+                    } else {
+                        data.setValue(new VoteCount("", "", 0L));
                     }
 
                 }

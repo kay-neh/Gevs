@@ -49,6 +49,9 @@ public class VoterVoteDetailsActivity extends AppCompatActivity {
                     binding.dialogCandidateName.setText(candidate.getName());
                     binding.partyMaterialTextView.setText(candidate.getParty());
                     binding.constituencyMaterialTextView.setText(candidate.getConstituency());
+                    binding.ageMaterialTextView.setText(candidate.getAge());
+                    binding.dobMaterialTextView.setText(candidate.getDateOfBirth());
+                    binding.manifestoMaterialTextView.setText(candidate.getManifesto());
                     Glide.with(getApplicationContext()).load(candidate.getPhoto()).into(binding.dialogCandidateImageView);
                 }
             }
