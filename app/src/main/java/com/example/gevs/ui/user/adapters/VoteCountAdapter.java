@@ -4,67 +4,107 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.gevs.R;
 import com.example.gevs.data.pojo.DistrictVoteCount;
-import com.example.gevs.data.pojo.VoteCount;
 
+import java.util.HashMap;
 import java.util.List;
 
-public class VoteCountAdapter extends RecyclerView.Adapter<VoteCountAdapter.VoteCountViewHolder> {
+public class VoteCountAdapter extends BaseExpandableListAdapter {
 
-    List<DistrictVoteCount> voteCountList;
+    private Context context;
+    private List<String> expandableListTitle;
+    private HashMap<String, List<DistrictVoteCount>> expandableListDetail;
 
-    public void setList(List<DistrictVoteCount> voteCountList) {
-        this.voteCountList = voteCountList;
-        notifyDataSetChanged();
-    }
-
-    @NonNull
-    @Override
-    public VoteCountViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        View view = inflater.inflate(R.layout.list_item_vote_count, parent, false);
-        return new VoteCountViewHolder(view);
+    public VoteCountAdapter(Context context, List<String> expandableListTitle, HashMap<String, List<DistrictVoteCount>> expandableListDetail) {
+        this.context = context;
+        this.expandableListTitle = expandableListTitle;
+        this.expandableListDetail = expandableListDetail;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VoteCountViewHolder holder, int position) {
-        if (voteCountList != null) {
-            DistrictVoteCount voteCount = voteCountList.get(position);
-            holder.candidateName.setText(voteCount.getName());
-            holder.candidateParty.setText(voteCount.getParty());
-            holder.candidateVoteCount.setText(String.valueOf(voteCount.getVote()));
-            Glide.with(holder.candidateImage.getContext()).load(voteCount.getPhoto()).into(holder.candidateImage);
+    public int getGroupCount() {
+        return expandableListTitle.size();
+    }
+
+    @Override
+    public int getChildrenCount(int groupPosition) {
+        return expandableListDetail.get(expandableListTitle.get(groupPosition)).size();
+    }
+
+    @Override
+    public Object getGroup(int groupPosition) {
+        return expandableListTitle.get(groupPosition);
+    }
+
+    @Override
+    public Object getChild(int groupPosition, int childPosition) {
+        return expandableListDetail.get(expandableListTitle.get(groupPosition)).get(childPosition);
+    }
+
+    @Override
+    public long getGroupId(int groupPosition) {
+        return groupPosition;
+    }
+
+    @Override
+    public long getChildId(int groupPosition, int childPosition) {
+        return childPosition;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+
+    @Override
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        String listTitle = (String) getGroup(groupPosition);
+        if (convertView == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) this.context.
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = layoutInflater.inflate(R.layout.list_item_group_constituency, null);
         }
+
+        TextView constituency = convertView.findViewById(R.id.result_constituency);
+        constituency.setText(listTitle);
+
+        ExpandableListView eLV = (ExpandableListView) parent;
+        eLV.expandGroup(groupPosition, true);
+
+        return convertView;
     }
 
     @Override
-    public int getItemCount() {
-        if (voteCountList != null)
-            return voteCountList.size();
-        else return 0;
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        final DistrictVoteCount expandedDistrictVoteCount = (DistrictVoteCount) getChild(groupPosition, childPosition);
+        if (convertView == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) this.context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = layoutInflater.inflate(R.layout.list_item_vote_count, null);
+        }
+
+        ImageView candidateImage = convertView.findViewById(R.id.candidate_imageView);
+        TextView candidateName = convertView.findViewById(R.id.candidate_name);
+        TextView candidateParty = convertView.findViewById(R.id.candidate_party);
+        TextView candidateVoteCount = convertView.findViewById(R.id.vote_count);
+
+        Glide.with(candidateImage.getContext()).load(expandedDistrictVoteCount.getPhoto()).into(candidateImage);
+        candidateName.setText(expandedDistrictVoteCount.getName());
+        candidateParty.setText(expandedDistrictVoteCount.getParty());
+        candidateVoteCount.setText(String.valueOf(expandedDistrictVoteCount.getVote()));
+        return convertView;
     }
 
-    class VoteCountViewHolder extends RecyclerView.ViewHolder {
-        TextView candidateName, candidateParty, candidateVoteCount;
-        ImageView candidateImage;
-
-        public VoteCountViewHolder(@NonNull View itemView) {
-            super(itemView);
-            candidateName = itemView.findViewById(R.id.candidate_name);
-            candidateParty = itemView.findViewById(R.id.candidate_party);
-            candidateVoteCount = itemView.findViewById(R.id.vote_count);
-            candidateImage = itemView.findViewById(R.id.candidate_imageView);
-        }
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return false;
     }
 
 }

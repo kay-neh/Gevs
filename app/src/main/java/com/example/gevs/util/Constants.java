@@ -9,7 +9,7 @@ public class Constants {
     public static final String KEY_RESULTS = "results";
     public static final String KEY_VOTE = "vote";
     public static final String KEY_PUBLISH = "publish";
-
+    public static final String KEY_NOTIFICATIONS = "notifications";
 
     public static final String ROLE_VOTER = "Voter";
     public static final String ROLE_ADMIN = "Admin";
@@ -30,5 +30,8 @@ public class Constants {
 
     public static final String ELECTION_STATUS_PENDING = "Pending";
     public static final String ELECTION_STATUS_COMPLETED = "Completed";
+
+
+    public static final String NOTIFICATION_TOPIC_ELECTION = "election";
 
 }

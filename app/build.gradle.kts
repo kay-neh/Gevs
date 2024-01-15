@@ -72,6 +72,12 @@ dependencies {
     implementation("com.google.firebase:firebase-database")
     // Add the dependency for the Cloud Storage library
     implementation("com.google.firebase:firebase-storage")
+    // Add the dependency for the Cloud Messaging library
+    implementation("com.google.firebase:firebase-messaging")
+
+    // define any required OkHttp artifacts without version
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.1"))
+    implementation("com.squareup.okhttp3:okhttp")
 
     // scanner implementation
     implementation ("com.google.android.gms:play-services-vision:20.1.3")
