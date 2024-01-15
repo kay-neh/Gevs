@@ -134,7 +134,7 @@ public class AdminMainActivity extends AppCompatActivity {
     public void showAboutDialog() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
         builder.setTitle("About the app");
-        builder.setMessage(R.string.lorem_ipsum);
+        builder.setMessage(R.string.about_app);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
