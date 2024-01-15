@@ -161,7 +161,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="64dp"
-                    android:text="Election duration"
+                    tools:text="Election duration"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/admin_analytics_activeVoters_textView" />
@@ -170,7 +170,7 @@
                     android:id="@+id/value_duration_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="180 mins"
+                    tools:text="180 mins"
                     app:layout_constraintBottom_toBottomOf="@+id/admin_analytics_duration_textView"
                     app:layout_constraintStart_toStartOf="@+id/value_activeVoters_textView"
                     app:layout_constraintTop_toTopOf="@+id/admin_analytics_duration_textView" />

@@ -21,10 +21,13 @@ import com.anychart.enums.Position;
 import com.anychart.enums.TooltipPositionMode;
 import com.example.gevs.R;
 import com.example.gevs.data.BaseRepository;
+import com.example.gevs.data.pojo.Candidate;
 import com.example.gevs.data.pojo.DistrictPartyWinner;
 import com.example.gevs.data.pojo.ElectionResult;
 import com.example.gevs.data.pojo.SeatCount;
+import com.example.gevs.data.pojo.Vote;
 import com.example.gevs.data.pojo.VoteCount;
+import com.example.gevs.data.pojo.Voter;
 import com.example.gevs.databinding.ActivityVoterAnalyticsBinding;
 import com.example.gevs.ui.user.adapters.DistrictWinnerAdapter;
 import com.example.gevs.util.Constants;
@@ -69,6 +72,39 @@ public class VoterAnalyticsActivity extends AppCompatActivity {
             public void onChanged(List<DistrictPartyWinner> districtPartyWinners) {
                 if (districtPartyWinners != null) {
                     districtWinnerAdapter.setList(districtPartyWinners);
+                }
+            }
+        });
+
+        // registered voters
+        baseRepository.getRegisteredVotersCount().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer registeredVotersCount) {
+                if (registeredVotersCount != null) {
+                    binding.valueRegisteredVotersTextView.setText(String.valueOf(registeredVotersCount));
+                }
+            }
+        });
+
+
+        // verified voters
+        baseRepository.getAllVoters().observe(this, new Observer<List<Voter>>() {
+            @Override
+            public void onChanged(List<Voter> voters) {
+                if (voters != null) {
+                    int verifiedVoters = voters.size();
+                    binding.valueVerifiedVotersTextView.setText(String.valueOf(verifiedVoters));
+                }
+            }
+        });
+
+        // active voters
+        baseRepository.getVotesByTime().observe(this, new Observer<List<Vote>>() {
+            @Override
+            public void onChanged(List<Vote> votes) {
+                if (votes != null) {
+                    int activeVoters = votes.size();
+                    binding.valueActiveVotersTextView.setText(String.valueOf(activeVoters));
                 }
             }
         });
@@ -129,8 +165,14 @@ public class VoterAnalyticsActivity extends AppCompatActivity {
                 public void onChanged(VoteCount voteCount) {
                     if (voteCount != null) {
                         if (voteCount.getVote() > 0) {
-                            districtPartyWinners.add(new DistrictPartyWinner(s, voteCount.getParty(), voteCount.getName()));
-                            data.setValue(districtPartyWinners);
+                            baseRepository.getCandidateById(voteCount.getName()).observe(VoterAnalyticsActivity.this, new Observer<Candidate>() {
+                                @Override
+                                public void onChanged(Candidate candidate) {
+                                    districtPartyWinners.add(new DistrictPartyWinner(s, voteCount.getParty(), voteCount.getName(), candidate.getPhoto()));
+                                    data.setValue(districtPartyWinners);
+                                }
+                            });
+
                         }
                     }
                 }

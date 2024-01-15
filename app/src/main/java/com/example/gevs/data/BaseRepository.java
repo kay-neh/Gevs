@@ -147,4 +147,8 @@ public class BaseRepository {
         remoteDataSource.clearAllNotifications(userId);
     }
 
+    public LiveData<Integer> getRegisteredVotersCount() {
+        return remoteDataSource.getRegisteredVotersCount();
+    }
+
 }
